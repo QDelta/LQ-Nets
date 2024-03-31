@@ -10,7 +10,7 @@ def learned_quantization(nbits: int | None, q_T: int, q_alpha: float):
             return w, None
     elif nbits == 0:
         def _forward(ctx, w, *args):
-            return torch.zeros_like(w, requires_grad=True), None
+            return torch.zeros_like(w), None
     else:
         assert nbits <= 8
         bitvecs = np.unpackbits(np.arange(2 ** nbits, dtype=np.uint8).reshape(-1, 1), axis=1)[:,-nbits:]
@@ -28,7 +28,7 @@ def learned_quantization(nbits: int | None, q_T: int, q_alpha: float):
                 qlevels = qlevels[qlevel_idx]
                 encodings = encodings[qlevel_idx]
 
-                wq = torch.zeros_like(w, requires_grad=True)
+                wq = torch.zeros_like(w)
                 wb = torch.zeros(w.numel(), nbits, device=w.device)
                 need_quantize = torch.ones_like(w, dtype=torch.bool)
 
@@ -53,6 +53,7 @@ def learned_quantization(nbits: int | None, q_T: int, q_alpha: float):
                 basis = q_alpha * basis + (1-q_alpha) * v
 
             # wq *= weight_mask
+            ctx.mark_non_differentiable(basis)
             return wq, basis
 
     class LearnedQuantization(torch.autograd.Function):
@@ -110,7 +111,7 @@ class LQConv(nn.Module):
         n = self.kernel_size * self.kernel_size * self.out_channels
         m = self.kernel_size * self.kernel_size * self.in_channels
         self.conv.weight.data.normal_(0, math.sqrt(2. / (n+m)))
-        
+
         # Learned quantization
         if nbits is not None:
             self.register_buffer('basis', weight_init_basis(nbits, n))
@@ -122,3 +123,17 @@ class LQConv(nn.Module):
         q_weight, new_basis = self.lq.apply(self.conv.weight, self.basis, self.training)
         self.basis = new_basis
         return F.conv2d(x, q_weight, self.conv.bias, self.conv.stride, self.conv.padding, self.conv.dilation, self.conv.groups)
+
+class LQActiv(nn.Module):
+    def __init__(self, nbits=None, q_T=1, q_alpha=0.9):
+        super(LQActiv, self).__init__()
+        if nbits is not None:
+            self.register_buffer('basis', activ_init_basis(nbits))
+        else:
+            self.basis = None
+        self.lq = learned_quantization(nbits, q_T, q_alpha)
+
+    def forward(self, x):
+        q_x, new_basis = self.lq.apply(x, self.basis, self.training)
+        self.basis = new_basis
+        return q_x

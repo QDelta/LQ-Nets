@@ -3,26 +3,27 @@ import torch.nn as nn
 from lq_layers import *
 
 class ResNetBlock(nn.Module):
-    def __init__(self, in_chs, out_chs, strides, nbits=None):
+    def __init__(self, in_chs, out_chs, strides, w_nbits, a_nbits):
         super(ResNetBlock, self).__init__()
         self.conv1 = nn.Sequential(
             LQConv(in_channels=in_chs, out_channels=out_chs,
-                   stride=strides, padding=1, kernel_size=3, bias=False, nbits=nbits),
+                   stride=strides, padding=1, kernel_size=3, bias=False, nbits=w_nbits),
             nn.BatchNorm2d(out_chs),
-            nn.ReLU(True))
+            nn.ReLU(True),
+            LQActiv(nbits=a_nbits))
         self.conv2 = nn.Sequential(
             LQConv(in_channels=out_chs, out_channels=out_chs,
-                   stride=1, padding=1, kernel_size=3, bias=False, nbits=nbits),
+                   stride=1, padding=1, kernel_size=3, bias=False, nbits=w_nbits),
             nn.BatchNorm2d(out_chs))
 
         if in_chs != out_chs:
             self.id_mapping = nn.Sequential(
                 LQConv(in_channels=in_chs, out_channels=out_chs,
-                       stride=strides, padding=0, kernel_size=1, bias=False, nbits=nbits),
+                       stride=strides, padding=0, kernel_size=1, bias=False, nbits=w_nbits),
                 nn.BatchNorm2d(out_chs))
         else:
             self.id_mapping = None
-        self.final_activation = nn.ReLU(True)
+        self.final_activation = nn.Sequential(nn.ReLU(True), LQActiv(nbits=a_nbits))
 
     def forward(self, x):
         out = self.conv1(x)
@@ -34,7 +35,7 @@ class ResNetBlock(nn.Module):
         return self.final_activation(x_ + out)
 
 class ResNetCIFAR(nn.Module):
-    def __init__(self, num_layers=20, nbits=None):
+    def __init__(self, num_layers=20, w_nbits=None, a_nbits=None):
         super(ResNetCIFAR, self).__init__()
         self.num_layers = num_layers
         self.head_conv = nn.Sequential(
@@ -49,7 +50,8 @@ class ResNetCIFAR(nn.Module):
         # Stage 1
         for j in range(num_layers_per_stage):
             strides = 1
-            self.body_op.append(ResNetBlock(num_inputs, 16, strides, nbits=nbits))
+            self.body_op.append(ResNetBlock(num_inputs, 16, strides,
+                                            w_nbits=w_nbits, a_nbits=a_nbits))
             num_inputs = 16
         # Stage 2
         for j in range(num_layers_per_stage):
@@ -57,7 +59,8 @@ class ResNetCIFAR(nn.Module):
                 strides = 2
             else:
                 strides = 1
-            self.body_op.append(ResNetBlock(num_inputs, 32, strides, nbits=nbits))
+            self.body_op.append(ResNetBlock(num_inputs, 32, strides,
+                                            w_nbits=w_nbits, a_nbits=a_nbits))
             num_inputs = 32
         # Stage 2
         for j in range(num_layers_per_stage):
@@ -65,9 +68,10 @@ class ResNetCIFAR(nn.Module):
                 strides = 2
             else:
                 strides = 1
-            self.body_op.append(ResNetBlock(num_inputs, 64, strides, nbits=nbits))
+            self.body_op.append(ResNetBlock(num_inputs, 64, strides,
+                                            w_nbits=w_nbits, a_nbits=a_nbits))
             num_inputs = 64
-            
+ 
         self.body_op = nn.Sequential(*self.body_op)
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
         self.final_fc = LQLinear(64, 10, nbits=None)

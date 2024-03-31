@@ -51,12 +51,16 @@ def test(model: nn.Module, loader: DataLoader):
     test_acc = test_correct / test_total
     return test_loss, test_acc
 
-def train(nbits, finetune=False, load_ckpt=False, epochs=200, batch_size=128):
-    print(f'\nQuantization: {nbits}, Using device: {DEVICE}')
+def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, epochs=200, batch_size=128):
+    print(f'\nQuantization: weight {w_nbits} activation {a_nbits}, Using device: {DEVICE}')
 
-    model = ResNetCIFAR(nbits=nbits).to(DEVICE)
+    model = ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
 
-    ckpt_filename = f'resnet20_cifar{"_q" + str(nbits) if nbits is not None else ""}{"_ft" if finetune else ""}.pt'
+    ckpt_filename = ( 'resnet20_cifar'
+                    + ('' if w_nbits is None else f'_wq{w_nbits}')
+                    + ('' if a_nbits is None else f'_aq{a_nbits}')
+                    + ('_ft' if finetune else '')
+                    + '.pt')
     if load_ckpt:
         model.load_state_dict(torch.load(ckpt_filename))
     elif finetune:
@@ -112,7 +116,8 @@ def train(nbits, finetune=False, load_ckpt=False, epochs=200, batch_size=128):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--nbits', type=int, default=2)
+    parser.add_argument('--wq', type=int, default=None)
+    parser.add_argument('--aq', type=int, default=None)
     parser.add_argument('--finetune', action='store_true')
     args = parser.parse_args()
-    train(nbits=args.nbits, finetune=args.finetune)
+    train(w_nbits=args.wq, a_nbits=args.aq, finetune=args.finetune)
