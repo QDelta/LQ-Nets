@@ -51,7 +51,7 @@ def test(model: nn.Module, loader: DataLoader):
     test_acc = test_correct / test_total
     return test_loss, test_acc
 
-def train(nbits, finetune=False, load_ckpt=False, epochs=200, batch_size=200):
+def train(nbits, finetune=False, load_ckpt=False, epochs=200, batch_size=128):
     print(f'\nQuantization: {nbits}, Using device: {DEVICE}')
 
     model = ResNetCIFAR(nbits=nbits).to(DEVICE)
@@ -69,11 +69,10 @@ def train(nbits, finetune=False, load_ckpt=False, epochs=200, batch_size=200):
     test_loader = DataLoader(TEST_SET, batch_size=batch_size, shuffle=False)
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=1e-2, momentum=0.9, weight_decay=1e-4)
-    # scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
-    scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, threshold=1e-3)
+    optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)
+    scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
 
-    best_val_loss = float('inf')
+    best_val_acc = 0.0
 
     for epoch in range(epochs):
         print(f'\nEpoch {epoch+1}')
@@ -100,10 +99,10 @@ def train(nbits, finetune=False, load_ckpt=False, epochs=200, batch_size=200):
 
         model.eval()
         val_loss, val_acc = test(model, val_loader)
-        scheduler.step(val_loss)
+        scheduler.step()
         print(f'Validation Loss: {val_loss:.4f}, Validation Acc: {val_acc:.4f}')
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
+        if val_acc > best_val_acc:
+            best_val_acc = val_acc
             print('Saving ...')
             torch.save(model.state_dict(), ckpt_filename)
 
