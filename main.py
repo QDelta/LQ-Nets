@@ -9,6 +9,7 @@ from torch.utils.data import (random_split, DataLoader)
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from resnet20 import ResNetCIFAR
+from resnet import ResNet
 import os
 
 random.seed(42)
@@ -18,7 +19,7 @@ torch.manual_seed(42)
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # normalize = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
-normalize = transforms.Normalize((0.485, 0.456, 0.406), (0.485, 0.456, 0.406))
+normalize = transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))
 
 TRANSFORM_TRAIN = transforms.Compose([
     transforms.RandomHorizontalFlip(),
@@ -55,11 +56,12 @@ def test(model: nn.Module, loader: DataLoader):
     test_acc = test_correct / test_total
     return test_loss, test_acc
 
-def train(w_nbits, a_nbits, finetune=False, load_ckpt=False,
+def train(w_nbits, a_nbits, finetune=False,
           optimizer_type='sgd', epochs=200, batch_size=128):
     print(f'\nQuantization: weight {w_nbits} activation {a_nbits}, Using device: {DEVICE}')
 
-    model = ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
+    # model = ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
+    model = ResNet(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
 
     ckpt_base_filename = ( 'resnet20_cifar'
                     + ('' if w_nbits is None else f'_wq{w_nbits}')
@@ -68,9 +70,7 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False,
                     + '.pt')
     last_saved_filename = None
 
-    if load_ckpt:
-        model.load_state_dict(torch.load(ckpt_filename))
-    elif finetune:
+    if finetune:
         model_state = model.state_dict()
         model_state.update(torch.load('resnet20_cifar_pretrained.pt'))
         model.load_state_dict(model_state)
@@ -93,9 +93,9 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False,
       raise ValueError(f"Unsupported optimizer type: {optimizer_type}")
 
     # scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
-    scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
+    scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1)
 
-    best_val_acc = 0.0
+    best_val_loss = float('inf')
     save_threshold_epoch = epochs // 3
 
     for epoch in range(epochs):
@@ -123,12 +123,15 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False,
 
         model.eval()
         val_loss, val_acc = test(model, val_loader)
-        scheduler.step()
+        if isinstance(scheduler, lr_scheduler.ReduceLROnPlateau):
+            scheduler.step(val_loss)
+        else:
+            scheduler.step()
         print(f'Validation Loss: {val_loss:.4f}, Validation Acc: {val_acc:.4f}')
 
         if epoch >= save_threshold_epoch:
-          if val_acc > best_val_acc:
-              best_val_acc = val_acc
+          if val_loss < best_val_loss:
+              best_val_loss = val_loss
               print('Saving best model ...')
               if last_saved_filename is not None and last_saved_filename != ckpt_base_filename:
                   os.remove(last_saved_filename)
@@ -138,7 +141,7 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False,
 
         test_loss, test_acc = test(model, test_loader)
         print(f'Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}')
-    
+
     print('Saving final epoch model ...')
     torch.save(model.state_dict(), ckpt_base_filename)
 

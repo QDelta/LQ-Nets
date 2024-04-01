@@ -12,7 +12,7 @@ def learned_quantization(nbits: int | None, q_T: int, q_alpha: float):
         def _forward(ctx, w, *args):
             return torch.zeros_like(w), None
     else:
-        assert nbits <= 8
+        assert 0 < nbits <= 8
         bitvecs = np.unpackbits(np.arange(2 ** nbits, dtype=np.uint8).reshape(-1, 1), axis=1)[:,-nbits:]
         # {0, 1} to {-1, 1}
         encodings = torch.from_numpy(bitvecs.astype(np.float32) * 2 - 1)
@@ -81,7 +81,7 @@ class LQLinear(nn.Module):
         self.out_features = out_features
         self.linear = nn.Linear(in_features, out_features)
 
-        # Initailization
+        # Initialization
         m = self.in_features
         n = self.out_features
         self.linear.weight.data.normal_(0, math.sqrt(2. / (m+n)))
@@ -108,9 +108,9 @@ class LQConv(nn.Module):
         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding, bias=bias)
 
         # Initialization
-        n = self.kernel_size * self.kernel_size * self.out_channels
         m = self.kernel_size * self.kernel_size * self.in_channels
-        self.conv.weight.data.normal_(0, math.sqrt(2. / (n+m)))
+        n = self.kernel_size * self.kernel_size * self.out_channels
+        self.conv.weight.data.normal_(0, math.sqrt(2. / (m+n)))
 
         # Learned quantization
         if nbits is not None:
