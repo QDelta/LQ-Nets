@@ -51,7 +51,7 @@ def test(model: nn.Module, loader: DataLoader):
     test_acc = test_correct / test_total
     return test_loss, test_acc
 
-def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, epochs=200, batch_size=128):
+def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, optimizer_type='sgd', epochs=200, batch_size=128):
     print(f'\nQuantization: weight {w_nbits} activation {a_nbits}, Using device: {DEVICE}')
 
     model = ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
@@ -73,7 +73,16 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, epochs=200, batch_s
     test_loader = DataLoader(TEST_SET, batch_size=batch_size, shuffle=False)
 
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)
+    if optimizer_type.lower() == 'sgd':
+      optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)
+    elif optimizer_type.lower() == 'adam':
+      optimizer = optim.Adam(model.parameters(), lr=0.1)
+    elif optimizer_type.lower() == 'rmsprop':
+      optimizer = optim.RMSprop(model.parameters(), lr=0.1, weight_decay=1e-4)
+    elif optimizer_type.lower() == 'adagrad':
+      optimizer = optim.Adagrad(model.parameters(), lr=0.1, weight_decay=1e-4)
+    else:
+      raise ValueError(f"Unsupported optimizer type: {optimizer_type}")
     scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
 
     best_val_acc = 0.0
