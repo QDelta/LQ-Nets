@@ -9,6 +9,7 @@ from torch.utils.data import (random_split, DataLoader)
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from resnet20 import ResNetCIFAR
+import os
 
 random.seed(42)
 np.random.seed(42)
@@ -56,11 +57,13 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, optimizer_type='sgd
 
     model = ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
 
-    ckpt_filename = ( 'resnet20_cifar'
+    ckpt_base_filename  = ( 'resnet20_cifar'
                     + ('' if w_nbits is None else f'_wq{w_nbits}')
                     + ('' if a_nbits is None else f'_aq{a_nbits}')
                     + ('_ft' if finetune else '')
                     + '.pt')
+    last_saved_filename = None
+
     if load_ckpt:
         model.load_state_dict(torch.load(ckpt_filename))
     elif finetune:
@@ -72,7 +75,9 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, optimizer_type='sgd
     val_loader = DataLoader(VAL_SET, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(TEST_SET, batch_size=batch_size, shuffle=False)
 
+
     criterion = nn.CrossEntropyLoss()
+
     if optimizer_type.lower() == 'sgd':
       optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)
     elif optimizer_type.lower() == 'adam':
@@ -83,9 +88,13 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, optimizer_type='sgd
       optimizer = optim.Adagrad(model.parameters(), lr=0.1, weight_decay=1e-4)
     else:
       raise ValueError(f"Unsupported optimizer type: {optimizer_type}")
+
     scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
 
+
     best_val_acc = 0.0
+    save_threshold_epoch = epochs // 3
+
 
     for epoch in range(epochs):
         print(f'\nEpoch {epoch+1}')
@@ -114,13 +123,22 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, optimizer_type='sgd
         val_loss, val_acc = test(model, val_loader)
         scheduler.step()
         print(f'Validation Loss: {val_loss:.4f}, Validation Acc: {val_acc:.4f}')
-        if val_acc > best_val_acc:
-            best_val_acc = val_acc
-            print('Saving ...')
-            torch.save(model.state_dict(), ckpt_filename)
+
+        if epoch >= save_threshold_epoch:
+          if val_acc > best_val_acc:
+              best_val_acc = val_acc
+              print('Saving best model ...')
+              if last_saved_filename is not None and last_saved_filename != ckpt_base_filename:
+                  os.remove(last_saved_filename)
+              ckpt_filename = f'epoch_{epoch+1}_' + ckpt_base_filename
+              torch.save(model.state_dict(), ckpt_filename)
+              last_saved_filename = ckpt_filename
 
         test_loss, test_acc = test(model, test_loader)
         print(f'Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}')
+    
+    print('Saving final epoch model ...')
+    torch.save(model.state_dict(), ckpt_base_filename)
 
 if __name__ == '__main__':
     import argparse
