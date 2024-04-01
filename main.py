@@ -56,7 +56,7 @@ def test(model: nn.Module, loader: DataLoader):
     test_acc = test_correct / test_total
     return test_loss, test_acc
 
-def train(w_nbits, a_nbits, finetune=False,
+def train(w_nbits, a_nbits, finetune, lr, l2,
           optimizer_type='sgd', epochs=200, batch_size=128):
     print(f'\nQuantization: weight {w_nbits} activation {a_nbits}, Using device: {DEVICE}')
 
@@ -82,21 +82,21 @@ def train(w_nbits, a_nbits, finetune=False,
     criterion = nn.CrossEntropyLoss()
 
     if optimizer_type.lower() == 'sgd':
-      optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.9, weight_decay=1e-4)
+        optimizer = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=l2)
     elif optimizer_type.lower() == 'adam':
-      optimizer = optim.Adam(model.parameters(), lr=0.1)
+        optimizer = optim.Adam(model.parameters(), lr=lr)
     elif optimizer_type.lower() == 'rmsprop':
-      optimizer = optim.RMSprop(model.parameters(), lr=0.1, weight_decay=1e-4)
+        optimizer = optim.RMSprop(model.parameters(), lr=lr, weight_decay=l2)
     elif optimizer_type.lower() == 'adagrad':
-      optimizer = optim.Adagrad(model.parameters(), lr=0.1, weight_decay=1e-4)
+        optimizer = optim.Adagrad(model.parameters(), lr=lr, weight_decay=l2)
     else:
-      raise ValueError(f"Unsupported optimizer type: {optimizer_type}")
+        raise ValueError(f"Unsupported optimizer type: {optimizer_type}")
 
-    # scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
-    scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1)
+    scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[50, 100, 150], gamma=0.1)
+    # scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, factor=0.1, min_lr=1e-4)
 
     best_val_loss = float('inf')
-    save_threshold_epoch = epochs // 3
+    save_threshold_epoch = min(50, epochs // 3)
 
     for epoch in range(epochs):
         print(f'\nEpoch {epoch+1}')
@@ -148,8 +148,10 @@ def train(w_nbits, a_nbits, finetune=False,
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
+    parser.add_argument('--lr', type=float, default=0.1)
+    parser.add_argument('--l2', type=float, default=1e-3)
     parser.add_argument('--wq', type=int, default=None)
     parser.add_argument('--aq', type=int, default=None)
     parser.add_argument('--finetune', action='store_true')
     args = parser.parse_args()
-    train(w_nbits=args.wq, a_nbits=args.aq, finetune=args.finetune)
+    train(w_nbits=args.wq, a_nbits=args.aq, finetune=args.finetune, lr=args.lr, l2=args.l2)

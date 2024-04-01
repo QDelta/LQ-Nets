@@ -29,7 +29,7 @@ class BasicBlock(nn.Module):
         self.bn2 = nn.BatchNorm2d(planes)
         self.activ2 = nn.Sequential(nn.ReLU(True), LQActiv(nbits=a_nbits))
 
-        self.shortcut = nn.Sequential()
+        self.shortcut = nn.Identity()
         if stride != 1 or in_planes != planes:
             self.shortcut = LambdaLayer(lambda x:
                                             F.pad(x[:, :, ::2, ::2], (0, 0, 0, 0, planes//4, planes//4), "constant", 0))
