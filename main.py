@@ -17,15 +17,18 @@ torch.manual_seed(42)
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+# normalize = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+normalize = transforms.Normalize((0.485, 0.456, 0.406), (0.485, 0.456, 0.406))
+
 TRANSFORM_TRAIN = transforms.Compose([
-    transforms.RandomCrop(32, padding=4),
     transforms.RandomHorizontalFlip(),
+    transforms.RandomCrop(32, padding=4),
     transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+    normalize,
 ])
 TRANSFORM_TEST = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+    normalize,
 ])
 
 TRAIN_SET, VAL_SET = random_split(datasets.CIFAR10(root='./data', train=True, download=True), [0.9, 0.1])
@@ -52,12 +55,13 @@ def test(model: nn.Module, loader: DataLoader):
     test_acc = test_correct / test_total
     return test_loss, test_acc
 
-def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, optimizer_type='sgd', epochs=200, batch_size=128):
+def train(w_nbits, a_nbits, finetune=False, load_ckpt=False,
+          optimizer_type='sgd', epochs=200, batch_size=128):
     print(f'\nQuantization: weight {w_nbits} activation {a_nbits}, Using device: {DEVICE}')
 
     model = ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
 
-    ckpt_base_filename  = ( 'resnet20_cifar'
+    ckpt_base_filename = ( 'resnet20_cifar'
                     + ('' if w_nbits is None else f'_wq{w_nbits}')
                     + ('' if a_nbits is None else f'_aq{a_nbits}')
                     + ('_ft' if finetune else '')
@@ -75,7 +79,6 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, optimizer_type='sgd
     val_loader = DataLoader(VAL_SET, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(TEST_SET, batch_size=batch_size, shuffle=False)
 
-
     criterion = nn.CrossEntropyLoss()
 
     if optimizer_type.lower() == 'sgd':
@@ -89,12 +92,11 @@ def train(w_nbits, a_nbits, finetune=False, load_ckpt=False, optimizer_type='sgd
     else:
       raise ValueError(f"Unsupported optimizer type: {optimizer_type}")
 
-    scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
-
+    # scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[82, 123], gamma=0.1)
+    scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
 
     best_val_acc = 0.0
     save_threshold_epoch = epochs // 3
-
 
     for epoch in range(epochs):
         print(f'\nEpoch {epoch+1}')
