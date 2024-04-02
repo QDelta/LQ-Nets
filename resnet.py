@@ -9,14 +9,6 @@ def _weights_init(m):
     if isinstance(m, nn.Linear) or isinstance(m, nn.Conv2d):
         init.kaiming_normal_(m.weight, nonlinearity='relu')
 
-class LambdaLayer(nn.Module):
-    def __init__(self, lambd):
-        super(LambdaLayer, self).__init__()
-        self.lambd = lambd
-
-    def forward(self, x):
-        return self.lambd(x)
-
 class BasicBlock(nn.Module):
     expansion = 1
 
@@ -29,10 +21,10 @@ class BasicBlock(nn.Module):
         self.bn2 = nn.BatchNorm2d(planes)
         self.activ2 = nn.Sequential(nn.ReLU(True), LQActiv(nbits=a_nbits))
 
-        self.shortcut = nn.Identity()
         if stride != 1 or in_planes != planes:
-            self.shortcut = LambdaLayer(lambda x:
-                                            F.pad(x[:, :, ::2, ::2], (0, 0, 0, 0, planes//4, planes//4), "constant", 0))
+            self.shortcut = lambda x: F.pad(x[:, :, ::2, ::2], (0, 0, 0, 0, planes//4, planes//4), "constant", 0)
+        else:
+            self.shortcut = lambda x: x
 
     def forward(self, x):
         out = self.activ1(self.bn1(self.conv1(x)))
@@ -71,7 +63,7 @@ class ResNet(nn.Module):
         out = self.layer1(out)
         out = self.layer2(out)
         out = self.layer3(out)
-        out = F.avg_pool2d(out, out.size()[3])
+        out = F.adaptive_avg_pool2d(out, 1)
         out = out.view(out.size(0), -1)
         out = self.linear(out)
         return out
