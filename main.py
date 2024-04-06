@@ -9,6 +9,7 @@ from torch.utils.data import Dataset, DataLoader
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from resnet import ResNet
+from time import time
 import os
 
 random.seed(42)
@@ -17,6 +18,10 @@ torch.manual_seed(42)
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.backends.cudnn.benchmark = True
+
+def print_and_log(message, file):
+    print(message)
+    file.write(message + '\n')
 
 class ApplyTransform(Dataset):
     def __init__(self, dataset, transform):
@@ -52,6 +57,9 @@ def test(model: nn.Module, loader: DataLoader):
     test_loss = 0
     test_correct = 0
     test_total = 0
+    start_time = time()
+    start_memory = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0
+    
     with torch.no_grad():
         for inputs, targets in loader:
             inputs, targets = inputs.to(DEVICE), targets.to(DEVICE)
@@ -61,14 +69,17 @@ def test(model: nn.Module, loader: DataLoader):
             test_loss += loss.item()
             test_correct += (outputs.argmax(1) == targets).sum().item()
             test_total += targets.size(0)
+    
+    latency = time() - start_time
+    memory_usage = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0  # MB
+    test_memory_usage = memory_usage - start_memory
 
     test_loss /= len(loader)
     test_acc = test_correct / test_total
-    return test_loss, test_acc
+    return test_loss, test_acc, latency, test_memory_usage
 
 def train(w_nbits, a_nbits, lr=0.1, weight_decay=1e-3,
           optimizer_type='sgd', epochs=200, batch_size=128):
-    print(f'\nQuantization: weight={w_nbits} activation={a_nbits}, Using device: {DEVICE}')
 
     # import resnet20
     # model = resnet20.ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
@@ -80,6 +91,7 @@ def train(w_nbits, a_nbits, lr=0.1, weight_decay=1e-3,
         + ('' if a_nbits is None else f'_aq{a_nbits}')
         + '.pt'
     )
+    log_filename = ckpt_base_filename.replace('.pt', '.txt')
     last_saved_filename = None
 
     train_loader = DataLoader(TRAIN_SET, batch_size=batch_size, shuffle=True)
@@ -103,44 +115,58 @@ def train(w_nbits, a_nbits, lr=0.1, weight_decay=1e-3,
     best_test_acc = 0.0
     save_threshold_epoch = min(50, epochs // 3)
 
-    for epoch in range(epochs):
-        print(f'\nEpoch {epoch+1}')
-        model.train()
 
-        train_loss = 0
-        train_correct = 0
-        train_total = 0
-        for inputs, targets in tqdm(train_loader, desc='Train', unit='batch', ascii=True, dynamic_ncols=True):
-            inputs, targets = inputs.to(DEVICE), targets.to(DEVICE)
-            optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, targets)
-            loss.backward()
-            optimizer.step()
+    with open(log_filename, 'w') as log_file:
+        print_and_log(f'\nQuantization: weight={w_nbits} activation={a_nbits}, Using device: {DEVICE}', log_file)
 
-            train_loss += loss.item()
-            train_correct += (outputs.argmax(1) == targets).sum().item()
-            train_total += targets.size(0)
+        start_memory = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0
+        
+        for epoch in range(epochs):
+            print_and_log(f'\nEpoch {epoch+1}', log_file)
+            model.train()
 
-        train_loss /= len(train_loader)
-        train_acc = train_correct / train_total
-        print(f'LR: {optimizer.param_groups[0]["lr"]:.4e}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}')
+            train_loss = 0
+            train_correct = 0
+            train_total = 0
 
-        model.eval()
-        test_loss, test_acc = test(model, test_loader)
-        print(f'Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}')
+            start_time = time()
+            
+            for inputs, targets in tqdm(train_loader, desc='Train', unit='batch', ascii=True, dynamic_ncols=True):
+                inputs, targets = inputs.to(DEVICE), targets.to(DEVICE)
+                optimizer.zero_grad()
+                outputs = model(inputs)
+                loss = criterion(outputs, targets)
+                loss.backward()
+                optimizer.step()
 
-        scheduler.step()
+                train_loss += loss.item()
+                train_correct += (outputs.argmax(1) == targets).sum().item()
+                train_total += targets.size(0)
 
-        if epoch >= save_threshold_epoch:
-            if test_acc > best_test_acc:
-                best_test_acc = test_acc
-                print('Saving best model ...')
-                if last_saved_filename is not None and last_saved_filename != ckpt_base_filename:
-                    os.remove(last_saved_filename)
-                ckpt_filename = f'epoch_{epoch+1}_' + ckpt_base_filename
-                torch.save(model.state_dict(), ckpt_filename)
-                last_saved_filename = ckpt_filename
+            train_loss /= len(train_loader)
+            train_acc = train_correct / train_total
+
+            train_latency = time() - start_time 
+            end_memory = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0  # 结束时内存
+            train_memory_usage = end_memory - start_memory
+
+            print_and_log(f'LR: {optimizer.param_groups[0]["lr"]:.4e}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, Train Latency: {train_latency:.2f}s, Memory Usage: {train_memory_usage:.2f}MB', log_file)
+
+            model.eval()
+            test_loss, test_acc, test_latency, test_memory_usage = test(model, test_loader)
+            print_and_log(f'Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}, Test Latency: {test_latency:.2f}s, Test Memory Usage: {test_memory_usage:.2f}MB', log_file)
+
+            scheduler.step()
+
+            if epoch >= save_threshold_epoch:
+                if test_acc > best_test_acc:
+                    best_test_acc = test_acc
+                    print('Saving best model ...')
+                    if last_saved_filename is not None and last_saved_filename != ckpt_base_filename:
+                        os.remove(last_saved_filename)
+                    ckpt_filename = f'epoch_{epoch+1}_' + ckpt_base_filename
+                    torch.save(model.state_dict(), ckpt_filename)
+                    last_saved_filename = ckpt_filename
 
     print('Saving final epoch model ...')
     torch.save(model.state_dict(), ckpt_base_filename)
