@@ -10,6 +10,7 @@ import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from resnet import ResNet
 from time import time
+from contextlib import contextmanager
 import os
 
 random.seed(42)
@@ -19,9 +20,15 @@ torch.manual_seed(42)
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.backends.cudnn.benchmark = True
 
-def print_and_log(message, file):
-    print(message)
-    file.write(message + '\n')
+@contextmanager
+def print_and_log(log_filename):
+    log_file = open(log_filename, 'w')
+    def log(message):
+        print(message)
+        log_file.write(message + '\n')
+        log_file.flush()
+    yield log
+    log_file.close()
 
 class ApplyTransform(Dataset):
     def __init__(self, dataset, transform):
@@ -116,13 +123,13 @@ def train(w_nbits, a_nbits, lr=0.1, weight_decay=1e-3,
     save_threshold_epoch = min(50, epochs // 3)
 
 
-    with open(log_filename, 'w') as log_file:
-        print_and_log(f'\nQuantization: weight={w_nbits} activation={a_nbits}, Using device: {DEVICE}', log_file)
+    with print_and_log(log_filename) as log:
+        log(f'\nQuantization: weight={w_nbits} activation={a_nbits}, Using device: {DEVICE}')
 
         start_memory = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0
         
         for epoch in range(epochs):
-            print_and_log(f'\nEpoch {epoch+1}', log_file)
+            log(f'\nEpoch {epoch+1}')
             model.train()
 
             train_loss = 0
@@ -150,11 +157,11 @@ def train(w_nbits, a_nbits, lr=0.1, weight_decay=1e-3,
             end_memory = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0  # 结束时内存
             train_memory_usage = end_memory - start_memory
 
-            print_and_log(f'LR: {optimizer.param_groups[0]["lr"]:.4e}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, Train Latency: {train_latency:.2f}s, Memory Usage: {train_memory_usage:.2f}MB', log_file)
+            log(f'LR: {optimizer.param_groups[0]["lr"]:.4e}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, Train Latency: {train_latency:.2f}s, Memory Usage: {train_memory_usage:.2f}MB')
 
             model.eval()
             test_loss, test_acc, test_latency, test_memory_usage = test(model, test_loader)
-            print_and_log(f'Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}, Test Latency: {test_latency:.2f}s, Test Memory Usage: {test_memory_usage:.2f}MB', log_file)
+            log(f'Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.4f}, Test Latency: {test_latency:.2f}s, Test Memory Usage: {test_memory_usage:.2f}MB')
 
             scheduler.step()
 
