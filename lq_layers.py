@@ -1,23 +1,24 @@
 import torch
-import torch.nn as nn
+from torch import nn, autograd
 import torch.nn.functional as F
 import numpy as np
 import math
 
-def learned_quantization(nbits: int | None, q_T: int, q_alpha: float):
+def learned_quantization(nbits: int | None, q_T: int, q_alpha: float, clamp_grad=False):
     if nbits is None:
         def _forward(ctx, w, *args):
             return w, None
-    elif nbits == 0:
-        def _forward(ctx, w, *args):
-            return torch.zeros_like(w), None
+
+        def _backward(ctx, g, _):
+            return g, None, None
     else:
         assert 0 < nbits <= 8
         bitvecs = np.unpackbits(np.arange(2 ** nbits, dtype=np.uint8).reshape(-1, 1), axis=1)[:,-nbits:]
         # {0, 1} to {-1, 1}
         encodings = torch.from_numpy(bitvecs.astype(np.float32) * 2 - 1)
 
-        def _forward(ctx, w: torch.Tensor, basis: torch.Tensor, training: bool):
+        def _forward(ctx: autograd.function.FunctionCtx,
+                     w: torch.Tensor, basis: torch.Tensor, training: bool):
             nonlocal encodings
             encodings = encodings.to(basis.device)
             # weight_mask = w != 0
@@ -41,27 +42,32 @@ def learned_quantization(nbits: int | None, q_T: int, q_alpha: float):
                 wq[need_quantize] = qlevels[-1]
                 wb[need_quantize.view(-1)] = encodings[-1]
 
-                return wq, wb
+                return wq, wb, qlevels
 
-            if not training:
-                wq, _ = quantize(w, basis, encodings)
-            else:
+            if training:
                 v = basis
                 for _ in range(q_T):
-                    wq, wb = quantize(w, v, encodings)
+                    wq, wb, qlevels = quantize(w, v, encodings)
                     v = torch.linalg.solve(wb.T @ wb, wb.T @ w.view(-1))
                 basis = q_alpha * basis + (1-q_alpha) * v
+            else:
+                wq, _, qlevels = quantize(w, basis, encodings)
 
             # wq *= weight_mask
+            if clamp_grad:
+                ctx.save_for_backward((w >= qlevels[0]) & (w <= qlevels[-1]))
             ctx.mark_non_differentiable(basis)
             return wq, basis
 
-    class LearnedQuantization(torch.autograd.Function):
-        forward = _forward
-
-        @staticmethod
-        def backward(ctx, g, _):
+        def _backward(ctx, g: torch.Tensor, _):
+            if clamp_grad:
+                (grad_mask,) = ctx.saved_tensors
+                g = g * grad_mask.type_as(g.data)
             return g, None, None
+
+    class LearnedQuantization(autograd.Function):
+        forward = _forward
+        backward = _backward
 
     return LearnedQuantization
 
@@ -131,7 +137,7 @@ class LQActiv(nn.Module):
             self.register_buffer('basis', activ_init_basis(nbits))
         else:
             self.basis = None
-        self.lq = learned_quantization(nbits, q_T, q_alpha)
+        self.lq = learned_quantization(nbits, q_T, q_alpha, clamp_grad=True)
 
     def forward(self, x):
         q_x, new_basis = self.lq.apply(x, self.basis, self.training)
