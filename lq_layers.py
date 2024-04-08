@@ -2,9 +2,15 @@ import torch
 from torch import nn, autograd
 import torch.nn.functional as F
 import numpy as np
+from enum import Enum
 import math
 
-def learned_quantization(nbits: int | None, q_T: int, q_alpha: float, clamp_grad=False):
+class MaskType(Enum):
+    NO_MASK = 0
+    IN_RANGE = 1
+    BELOW_MAX = 2
+
+def learned_quantization(nbits: int | None, q_T: int, q_alpha: float, mask_grad=MaskType.NO_MASK):
     if nbits is None:
         def _forward(ctx, w, *args):
             return w, None
@@ -54,13 +60,17 @@ def learned_quantization(nbits: int | None, q_T: int, q_alpha: float, clamp_grad
                 wq, _, qlevels = quantize(w, basis, encodings)
 
             # wq *= weight_mask
-            if clamp_grad:
+    
+            if mask_grad == MaskType.IN_RANGE:
                 ctx.save_for_backward((w >= qlevels[0]) & (w <= qlevels[-1]))
+            elif mask_grad == MaskType.BELOW_MAX:
+                ctx.save_for_backward(w <= qlevels[-1])
+
             ctx.mark_non_differentiable(basis)
             return wq, basis
 
         def _backward(ctx, g: torch.Tensor, _):
-            if clamp_grad:
+            if mask_grad != MaskType.NO_MASK:
                 (grad_mask,) = ctx.saved_tensors
                 g = g * grad_mask.type_as(g.data)
             return g, None, None
@@ -137,7 +147,7 @@ class LQActiv(nn.Module):
             self.register_buffer('basis', activ_init_basis(nbits))
         else:
             self.basis = None
-        self.lq = learned_quantization(nbits, q_T, q_alpha, clamp_grad=True)
+        self.lq = learned_quantization(nbits, q_T, q_alpha, mask_grad=MaskType.IN_RANGE)
 
     def forward(self, x):
         q_x, new_basis = self.lq.apply(x, self.basis, self.training)
