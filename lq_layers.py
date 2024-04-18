@@ -10,7 +10,10 @@ class MaskType(Enum):
     IN_RANGE = 1
     BELOW_MAX = 2
 
-def learned_quantization(nbits: int | None, q_T: int, q_alpha: float, mask_grad=MaskType.NO_MASK):
+def soft_thresholding(basis, lambda_val):
+    return torch.sign(basis) * torch.max(torch.abs(basis) - lambda_val, torch.zeros_like(basis))
+
+def learned_quantization(nbits: int, q_T: int, q_alpha: float, lambda_val: float, mask_grad=MaskType.NO_MASK):
     if nbits is None:
         def _forward(ctx, w, *args):
             return w, None
@@ -55,7 +58,11 @@ def learned_quantization(nbits: int | None, q_T: int, q_alpha: float, mask_grad=
                 for _ in range(q_T):
                     wq, wb, qlevels = quantize(w, v, encodings)
                     v = torch.linalg.solve(wb.T @ wb, wb.T @ w.view(-1))
-                basis = q_alpha * basis + (1-q_alpha) * v
+                # basis = q_alpha * basis + (1-q_alpha) * v
+                if lambda_val is not None:
+                    basis = soft_thresholding(q_alpha * basis + (1-q_alpha) * v, lambda_val=lambda_val)
+                else:    
+                    basis = q_alpha * basis + (1-q_alpha) * v
             else:
                 wq, _, qlevels = quantize(w, basis, encodings)
 
@@ -91,7 +98,7 @@ def activ_init_basis(nbits: int):
     return torch.tensor([(NORM_PPF_0_75 * 2 / (2 ** nbits - 1)) * (2. ** i) for i in range(nbits)])
 
 class LQLinear(nn.Module):
-    def __init__(self, in_features, out_features, nbits=None, q_T=1, q_alpha=0.9):
+    def __init__(self, in_features, out_features, nbits=None, q_T=1, q_alpha=0.9, lambda_val=None):
         super(LQLinear, self).__init__()
         self.in_features = in_features
         self.out_features = out_features
@@ -107,7 +114,7 @@ class LQLinear(nn.Module):
             self.register_buffer('basis', weight_init_basis(nbits, n))
         else:
             self.basis = None
-        self.lq = learned_quantization(nbits, q_T, q_alpha)
+        self.lq = learned_quantization(nbits, q_T, q_alpha, lambda_val)
 
     def forward(self, x):
         q_weight, new_basis = self.lq.apply(self.linear.weight, self.basis, self.training)
@@ -115,7 +122,7 @@ class LQLinear(nn.Module):
         return F.linear(x, q_weight, self.linear.bias)
 
 class LQConv(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, bias=False, nbits=None, q_T=1, q_alpha=0.9):
+    def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, bias=False, nbits=None, q_T=1, q_alpha=0.9, lambda_val=None):
         super(LQConv, self).__init__()
         self.in_channels = in_channels
         self.out_channels = out_channels
@@ -133,7 +140,7 @@ class LQConv(nn.Module):
             self.register_buffer('basis', weight_init_basis(nbits, n))
         else:
             self.basis = None
-        self.lq = learned_quantization(nbits, q_T, q_alpha)
+        self.lq = learned_quantization(nbits, q_T, q_alpha, lambda_val)
 
     def forward(self, x):
         q_weight, new_basis = self.lq.apply(self.conv.weight, self.basis, self.training)
@@ -141,13 +148,13 @@ class LQConv(nn.Module):
         return F.conv2d(x, q_weight, self.conv.bias, self.conv.stride, self.conv.padding, self.conv.dilation, self.conv.groups)
 
 class LQActiv(nn.Module):
-    def __init__(self, nbits=None, q_T=1, q_alpha=0.9):
+    def __init__(self, nbits=None, q_T=1, q_alpha=0.9, lambda_val=None):
         super(LQActiv, self).__init__()
         if nbits is not None:
             self.register_buffer('basis', activ_init_basis(nbits))
         else:
             self.basis = None
-        self.lq = learned_quantization(nbits, q_T, q_alpha, mask_grad=MaskType.IN_RANGE)
+        self.lq = learned_quantization(nbits, q_T, q_alpha, mask_grad=MaskType.IN_RANGE, lambda_val=None)
 
     def forward(self, x):
         q_x, new_basis = self.lq.apply(x, self.basis, self.training)

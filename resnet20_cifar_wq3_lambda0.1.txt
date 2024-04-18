@@ -1,0 +1,4 @@
+
+Quantization: weight=3 activation=None threshold=0.1, Using device: cpu
+
+Epoch 1

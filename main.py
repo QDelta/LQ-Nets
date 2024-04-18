@@ -85,12 +85,12 @@ def test(model: nn.Module, loader: DataLoader):
     test_acc = test_correct / test_total
     return test_loss, test_acc, latency, test_memory_usage
 
-def train(w_nbits, a_nbits, lr=0.1, weight_decay=1e-3,
+def train(w_nbits, a_nbits, lambda_val, lr=0.1, weight_decay=1e-3,
           optimizer_type='sgd', epochs=200, batch_size=128):
 
     # import resnet20
     # model = resnet20.ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
-    model = ResNet(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
+    model = ResNet(w_nbits=w_nbits, a_nbits=a_nbits, lambda_val=lambda_val).to(DEVICE)
 
     ckpt_base_filename = (
         'resnet20_cifar'
