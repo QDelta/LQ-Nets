@@ -30,46 +30,60 @@ def load_model(model_path, num_layers, num_classes, w_nbits, a_nbits, device):
     
     return model
 
-def collect_activations_and_weights(model, dataloader, device):
+def collect_activations_and_quantized_weights(model, dataloader, device):
     activations = {}
-    weights = {}
-    
-    def get_activation(name):
+    quantized_weights = {}
+
+    def get_quantized_weight(name, layer):
         def hook(model, input, output):
-            activations[name] = output.detach().cpu().numpy()
+            q_weight = layer.lq.apply(layer.conv.weight, layer.basis, False)[0]
+            quantized_weights[name] = q_weight.detach().cpu().numpy()
         return hook
 
+    def get_activation(name, layer):
+      def hook(model, input, output):
+          activations[name] = output.detach().cpu().numpy()
+      return hook
+
     for name, layer in model.named_modules():
-        if isinstance(layer, (nn.Conv2d, nn.Linear, LQConv)):
-            layer.register_forward_hook(get_activation(name))
-            if hasattr(layer, 'weight'):
-                weights[name] = layer.weight.data.cpu().numpy()
+        if isinstance(layer, LQConv):
+            layer.register_forward_hook(get_quantized_weight(name, layer))
+        if isinstance(layer, LQActiv):
+            layer.register_forward_hook(get_activation(name, layer))
 
     with torch.no_grad():
         for inputs, _ in dataloader:
             inputs = inputs.to(device)
             _ = model(inputs)
 
-    return activations, weights
+    return activations, quantized_weights
 
-def plot_distribution(activations, weights):
-    for name in weights:
-        plt.figure(figsize=(12, 6))
-        plt.subplot(1, 2, 1)
-        plt.hist(weights[name].ravel(), bins=50, alpha=0.75)
-        plt.title(f'Weight Distribution: {name}')
-        plt.xlabel('Weight Values')
-        plt.ylabel('Frequency')
+def plot_distributions_side_by_side(activations, quantized_weights):
+    sorted_weight_keys = sorted(quantized_weights.keys())
+    sorted_activation_keys = sorted(activations.keys())
 
-        if name in activations:
-            plt.subplot(1, 2, 2)
-            plt.hist(activations[name].ravel(), bins=50, alpha=0.75)
-            plt.title(f'Activation Distribution: {name}')
-            plt.xlabel('Activation Values')
-            plt.ylabel('Frequency')
+    num_layers = max(len(sorted_weight_keys), len(sorted_activation_keys))
+    if num_layers == 1:  # Single layer case
+        fig, axes = plt.subplots(1, 2, figsize=(12, 6))
+        axes = [axes]
+    else:
+        fig, axes = plt.subplots(num_layers, 2, figsize=(12, 6 * num_layers))
 
-        plt.tight_layout()
-        plt.show()
+    for i, (weight_key, activation_key) in enumerate(zip(sorted_weight_keys, sorted_activation_keys)):
+        ax_w = axes[i][0]
+        ax_a = axes[i][1]
+        ax_w.hist(quantized_weights[weight_key].ravel(), bins=50, alpha=0.75)
+        ax_w.set_title(f'Quantized Weight Distribution: {weight_key}')
+        ax_w.set_xlabel('Weight Values')
+        ax_w.set_ylabel('Frequency')
+
+        ax_a.hist(activations[activation_key].ravel(), bins=50, alpha=0.75)
+        ax_a.set_title(f'Activation Distribution: {activation_key}')
+        ax_a.set_xlabel('Activation Values')
+        ax_a.set_ylabel('Frequency')
+
+    plt.tight_layout()
+    plt.show()
 
 def analyze_model(model_filename, device='cuda'):
     w_nbits, a_nbits = parse_quantization_bits_from_filename(model_filename)
@@ -82,8 +96,8 @@ def analyze_model(model_filename, device='cuda'):
 
     test_loader = DataLoader(TEST_SET, batch_size=64, shuffle=False)
 
-    activations, weights = collect_activations_and_weights(model, test_loader, device)
-    plot_distribution(activations, weights)
+    activations, weights = collect_activations_and_quantized_weights(model, test_loader, device)
+    plot_distributions_side_by_side(activations, weights)
 
 TEST_SET = datasets.CIFAR10(root='./data', train=False, download=True, transform=transforms.ToTensor())
 
