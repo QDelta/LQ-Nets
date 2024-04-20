@@ -19,6 +19,7 @@ torch.manual_seed(42)
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.backends.cudnn.benchmark = True
+print(device)
 
 @contextmanager
 def print_and_log(log_filename):
@@ -96,6 +97,7 @@ def train(w_nbits, a_nbits, lambda_val, lr=0.1, weight_decay=1e-3,
         'resnet20_cifar'
         + ('' if w_nbits is None else f'_wq{w_nbits}')
         + ('' if a_nbits is None else f'_aq{a_nbits}')
+        + ('' if lambda_val is None else f'_lambda{lambda_val}')
         + '.pt'
     )
     log_filename = ckpt_base_filename.replace('.pt', '.txt')

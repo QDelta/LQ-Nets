@@ -1,0 +1,802 @@
+
+Quantization: weight=2 activation=None threshold=0.001, Using device: cuda
+
+Epoch 1
+LR: 1.0000e-01, Train Loss: 1.6257, Train Acc: 0.3985, Train Latency: 29.87s, Memory Usage: 3110.0KB
+Test Loss: 1.5442, Test Acc: 0.4613, Test Latency: 2.48s, Test Memory Usage: 194.0KB
+
+Epoch 2
+LR: 1.0000e-01, Train Loss: 1.1489, Train Acc: 0.5868, Train Latency: 29.73s, Memory Usage: 3110.0KB
+Test Loss: 1.3718, Test Acc: 0.5438, Test Latency: 3.06s, Test Memory Usage: 194.0KB
+
+Epoch 3
+LR: 1.0000e-01, Train Loss: 1.0091, Train Acc: 0.6454, Train Latency: 31.26s, Memory Usage: 3110.0KB
+Test Loss: 1.4996, Test Acc: 0.5040, Test Latency: 3.15s, Test Memory Usage: 194.0KB
+
+Epoch 4
+LR: 1.0000e-01, Train Loss: 0.8953, Train Acc: 0.6866, Train Latency: 27.39s, Memory Usage: 3110.0KB
+Test Loss: 0.9687, Test Acc: 0.6823, Test Latency: 3.34s, Test Memory Usage: 194.0KB
+
+Epoch 5
+LR: 1.0000e-01, Train Loss: 0.8249, Train Acc: 0.7122, Train Latency: 32.10s, Memory Usage: 3110.0KB
+Test Loss: 1.0793, Test Acc: 0.6565, Test Latency: 3.33s, Test Memory Usage: 194.0KB
+
+Epoch 6
+LR: 1.0000e-01, Train Loss: 0.7716, Train Acc: 0.7338, Train Latency: 31.52s, Memory Usage: 3110.0KB
+Test Loss: 1.1285, Test Acc: 0.6310, Test Latency: 2.75s, Test Memory Usage: 194.0KB
+
+Epoch 7
+LR: 1.0000e-01, Train Loss: 0.7416, Train Acc: 0.7442, Train Latency: 24.60s, Memory Usage: 3110.0KB
+Test Loss: 0.7608, Test Acc: 0.7404, Test Latency: 2.43s, Test Memory Usage: 194.0KB
+
+Epoch 8
+LR: 1.0000e-01, Train Loss: 0.7236, Train Acc: 0.7517, Train Latency: 26.52s, Memory Usage: 3110.0KB
+Test Loss: 1.0226, Test Acc: 0.6647, Test Latency: 3.10s, Test Memory Usage: 194.0KB
+
+Epoch 9
+LR: 1.0000e-01, Train Loss: 0.7021, Train Acc: 0.7580, Train Latency: 21.02s, Memory Usage: 3110.0KB
+Test Loss: 0.9978, Test Acc: 0.6682, Test Latency: 2.47s, Test Memory Usage: 194.0KB
+
+Epoch 10
+LR: 1.0000e-01, Train Loss: 0.6931, Train Acc: 0.7613, Train Latency: 30.35s, Memory Usage: 3110.0KB
+Test Loss: 0.9991, Test Acc: 0.6635, Test Latency: 3.08s, Test Memory Usage: 194.0KB
+
+Epoch 11
+LR: 1.0000e-01, Train Loss: 0.6821, Train Acc: 0.7648, Train Latency: 29.75s, Memory Usage: 3110.0KB
+Test Loss: 0.9958, Test Acc: 0.6645, Test Latency: 2.95s, Test Memory Usage: 194.0KB
+
+Epoch 12
+LR: 1.0000e-01, Train Loss: 0.6741, Train Acc: 0.7661, Train Latency: 26.03s, Memory Usage: 3110.0KB
+Test Loss: 0.8890, Test Acc: 0.7027, Test Latency: 2.83s, Test Memory Usage: 194.0KB
+
+Epoch 13
+LR: 1.0000e-01, Train Loss: 0.6670, Train Acc: 0.7712, Train Latency: 27.14s, Memory Usage: 3110.0KB
+Test Loss: 0.7485, Test Acc: 0.7453, Test Latency: 2.84s, Test Memory Usage: 194.0KB
+
+Epoch 14
+LR: 1.0000e-01, Train Loss: 0.6598, Train Acc: 0.7741, Train Latency: 26.26s, Memory Usage: 3110.0KB
+Test Loss: 1.0650, Test Acc: 0.6534, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 15
+LR: 1.0000e-01, Train Loss: 0.6588, Train Acc: 0.7715, Train Latency: 26.31s, Memory Usage: 3110.0KB
+Test Loss: 0.8277, Test Acc: 0.7167, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 16
+LR: 1.0000e-01, Train Loss: 0.6507, Train Acc: 0.7763, Train Latency: 23.00s, Memory Usage: 3110.0KB
+Test Loss: 0.7962, Test Acc: 0.7353, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 17
+LR: 1.0000e-01, Train Loss: 0.6478, Train Acc: 0.7775, Train Latency: 24.51s, Memory Usage: 3110.0KB
+Test Loss: 0.8812, Test Acc: 0.7063, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 18
+LR: 1.0000e-01, Train Loss: 0.6500, Train Acc: 0.7772, Train Latency: 25.49s, Memory Usage: 3110.0KB
+Test Loss: 1.1554, Test Acc: 0.6479, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 19
+LR: 1.0000e-01, Train Loss: 0.6387, Train Acc: 0.7807, Train Latency: 26.54s, Memory Usage: 3110.0KB
+Test Loss: 1.1894, Test Acc: 0.6382, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 20
+LR: 1.0000e-01, Train Loss: 0.6456, Train Acc: 0.7781, Train Latency: 26.38s, Memory Usage: 3110.0KB
+Test Loss: 0.8887, Test Acc: 0.7105, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 21
+LR: 1.0000e-01, Train Loss: 0.6376, Train Acc: 0.7797, Train Latency: 26.30s, Memory Usage: 3110.0KB
+Test Loss: 0.9457, Test Acc: 0.7005, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 22
+LR: 1.0000e-01, Train Loss: 0.6278, Train Acc: 0.7862, Train Latency: 24.71s, Memory Usage: 3110.0KB
+Test Loss: 0.8344, Test Acc: 0.7242, Test Latency: 2.47s, Test Memory Usage: 194.0KB
+
+Epoch 23
+LR: 1.0000e-01, Train Loss: 0.6298, Train Acc: 0.7847, Train Latency: 24.75s, Memory Usage: 3110.0KB
+Test Loss: 1.1908, Test Acc: 0.6367, Test Latency: 2.48s, Test Memory Usage: 194.0KB
+
+Epoch 24
+LR: 1.0000e-01, Train Loss: 0.6269, Train Acc: 0.7868, Train Latency: 24.74s, Memory Usage: 3110.0KB
+Test Loss: 0.8279, Test Acc: 0.7189, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 25
+LR: 1.0000e-01, Train Loss: 0.6284, Train Acc: 0.7838, Train Latency: 24.96s, Memory Usage: 3110.0KB
+Test Loss: 0.8333, Test Acc: 0.7267, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 26
+LR: 1.0000e-01, Train Loss: 0.6296, Train Acc: 0.7823, Train Latency: 26.52s, Memory Usage: 3110.0KB
+Test Loss: 0.8703, Test Acc: 0.7074, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 27
+LR: 1.0000e-01, Train Loss: 0.6225, Train Acc: 0.7880, Train Latency: 24.58s, Memory Usage: 3110.0KB
+Test Loss: 0.8386, Test Acc: 0.7257, Test Latency: 2.48s, Test Memory Usage: 194.0KB
+
+Epoch 28
+LR: 1.0000e-01, Train Loss: 0.6296, Train Acc: 0.7842, Train Latency: 26.03s, Memory Usage: 3110.0KB
+Test Loss: 1.0667, Test Acc: 0.6362, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 29
+LR: 1.0000e-01, Train Loss: 0.6174, Train Acc: 0.7891, Train Latency: 24.52s, Memory Usage: 3110.0KB
+Test Loss: 1.0848, Test Acc: 0.6494, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 30
+LR: 1.0000e-01, Train Loss: 0.6268, Train Acc: 0.7853, Train Latency: 26.14s, Memory Usage: 3110.0KB
+Test Loss: 0.8657, Test Acc: 0.7033, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 31
+LR: 1.0000e-01, Train Loss: 0.6266, Train Acc: 0.7859, Train Latency: 25.35s, Memory Usage: 3110.0KB
+Test Loss: 1.0274, Test Acc: 0.6693, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 32
+LR: 1.0000e-01, Train Loss: 0.6234, Train Acc: 0.7867, Train Latency: 25.35s, Memory Usage: 3110.0KB
+Test Loss: 1.4465, Test Acc: 0.5873, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 33
+LR: 1.0000e-01, Train Loss: 0.6239, Train Acc: 0.7861, Train Latency: 26.38s, Memory Usage: 3110.0KB
+Test Loss: 0.9827, Test Acc: 0.6921, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 34
+LR: 1.0000e-01, Train Loss: 0.6181, Train Acc: 0.7872, Train Latency: 25.34s, Memory Usage: 3110.0KB
+Test Loss: 0.7761, Test Acc: 0.7406, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 35
+LR: 1.0000e-01, Train Loss: 0.6126, Train Acc: 0.7913, Train Latency: 26.31s, Memory Usage: 3110.0KB
+Test Loss: 1.0156, Test Acc: 0.6864, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 36
+LR: 1.0000e-01, Train Loss: 0.6269, Train Acc: 0.7843, Train Latency: 24.34s, Memory Usage: 3110.0KB
+Test Loss: 0.9055, Test Acc: 0.7004, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 37
+LR: 1.0000e-01, Train Loss: 0.6132, Train Acc: 0.7903, Train Latency: 24.19s, Memory Usage: 3110.0KB
+Test Loss: 1.7327, Test Acc: 0.5531, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 38
+LR: 1.0000e-01, Train Loss: 0.6135, Train Acc: 0.7902, Train Latency: 25.16s, Memory Usage: 3110.0KB
+Test Loss: 0.9085, Test Acc: 0.6924, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 39
+LR: 1.0000e-01, Train Loss: 0.6118, Train Acc: 0.7907, Train Latency: 25.38s, Memory Usage: 3110.0KB
+Test Loss: 0.7313, Test Acc: 0.7482, Test Latency: 2.48s, Test Memory Usage: 194.0KB
+
+Epoch 40
+LR: 1.0000e-01, Train Loss: 0.6134, Train Acc: 0.7902, Train Latency: 26.54s, Memory Usage: 3110.0KB
+Test Loss: 1.2485, Test Acc: 0.6224, Test Latency: 2.72s, Test Memory Usage: 194.0KB
+
+Epoch 41
+LR: 1.0000e-01, Train Loss: 0.6109, Train Acc: 0.7915, Train Latency: 24.82s, Memory Usage: 3110.0KB
+Test Loss: 0.9909, Test Acc: 0.7005, Test Latency: 2.47s, Test Memory Usage: 194.0KB
+
+Epoch 42
+LR: 1.0000e-01, Train Loss: 0.6118, Train Acc: 0.7895, Train Latency: 26.38s, Memory Usage: 3110.0KB
+Test Loss: 0.9536, Test Acc: 0.6641, Test Latency: 2.71s, Test Memory Usage: 194.0KB
+
+Epoch 43
+LR: 1.0000e-01, Train Loss: 0.6132, Train Acc: 0.7909, Train Latency: 25.75s, Memory Usage: 3110.0KB
+Test Loss: 0.7532, Test Acc: 0.7524, Test Latency: 2.77s, Test Memory Usage: 194.0KB
+
+Epoch 44
+LR: 1.0000e-01, Train Loss: 0.6046, Train Acc: 0.7927, Train Latency: 28.31s, Memory Usage: 3110.0KB
+Test Loss: 0.8736, Test Acc: 0.7169, Test Latency: 2.93s, Test Memory Usage: 194.0KB
+
+Epoch 45
+LR: 1.0000e-01, Train Loss: 0.6142, Train Acc: 0.7899, Train Latency: 28.76s, Memory Usage: 3110.0KB
+Test Loss: 0.7892, Test Acc: 0.7324, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 46
+LR: 1.0000e-01, Train Loss: 0.6150, Train Acc: 0.7904, Train Latency: 26.41s, Memory Usage: 3110.0KB
+Test Loss: 0.7875, Test Acc: 0.7323, Test Latency: 2.83s, Test Memory Usage: 194.0KB
+
+Epoch 47
+LR: 1.0000e-01, Train Loss: 0.6108, Train Acc: 0.7901, Train Latency: 24.76s, Memory Usage: 3110.0KB
+Test Loss: 1.0041, Test Acc: 0.6588, Test Latency: 2.51s, Test Memory Usage: 194.0KB
+
+Epoch 48
+LR: 1.0000e-01, Train Loss: 0.6132, Train Acc: 0.7909, Train Latency: 24.54s, Memory Usage: 3110.0KB
+Test Loss: 0.9281, Test Acc: 0.6990, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 49
+LR: 1.0000e-01, Train Loss: 0.6144, Train Acc: 0.7905, Train Latency: 23.74s, Memory Usage: 3110.0KB
+Test Loss: 1.3025, Test Acc: 0.5918, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 50
+LR: 1.0000e-01, Train Loss: 0.6116, Train Acc: 0.7929, Train Latency: 24.62s, Memory Usage: 3110.0KB
+Test Loss: 0.8073, Test Acc: 0.7401, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 51
+LR: 1.0000e-02, Train Loss: 0.4187, Train Acc: 0.8576, Train Latency: 26.70s, Memory Usage: 3110.0KB
+Test Loss: 0.4428, Test Acc: 0.8509, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 52
+LR: 1.0000e-02, Train Loss: 0.3686, Train Acc: 0.8748, Train Latency: 25.09s, Memory Usage: 3110.0KB
+Test Loss: 0.3952, Test Acc: 0.8644, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 53
+LR: 1.0000e-02, Train Loss: 0.3480, Train Acc: 0.8801, Train Latency: 24.23s, Memory Usage: 3110.0KB
+Test Loss: 0.3966, Test Acc: 0.8673, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 54
+LR: 1.0000e-02, Train Loss: 0.3350, Train Acc: 0.8846, Train Latency: 23.31s, Memory Usage: 3110.0KB
+Test Loss: 0.3905, Test Acc: 0.8706, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 55
+LR: 1.0000e-02, Train Loss: 0.3272, Train Acc: 0.8884, Train Latency: 26.25s, Memory Usage: 3110.0KB
+Test Loss: 0.4074, Test Acc: 0.8605, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 56
+LR: 1.0000e-02, Train Loss: 0.3232, Train Acc: 0.8903, Train Latency: 24.60s, Memory Usage: 3110.0KB
+Test Loss: 0.3697, Test Acc: 0.8766, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 57
+LR: 1.0000e-02, Train Loss: 0.3150, Train Acc: 0.8919, Train Latency: 26.55s, Memory Usage: 3110.0KB
+Test Loss: 0.4240, Test Acc: 0.8624, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 58
+LR: 1.0000e-02, Train Loss: 0.3176, Train Acc: 0.8921, Train Latency: 23.47s, Memory Usage: 3110.0KB
+Test Loss: 0.4126, Test Acc: 0.8596, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 59
+LR: 1.0000e-02, Train Loss: 0.3171, Train Acc: 0.8922, Train Latency: 26.12s, Memory Usage: 3110.0KB
+Test Loss: 0.3800, Test Acc: 0.8705, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 60
+LR: 1.0000e-02, Train Loss: 0.3152, Train Acc: 0.8920, Train Latency: 25.80s, Memory Usage: 3110.0KB
+Test Loss: 0.3942, Test Acc: 0.8663, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 61
+LR: 1.0000e-02, Train Loss: 0.3099, Train Acc: 0.8947, Train Latency: 26.52s, Memory Usage: 3110.0KB
+Test Loss: 0.4397, Test Acc: 0.8514, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 62
+LR: 1.0000e-02, Train Loss: 0.3159, Train Acc: 0.8917, Train Latency: 26.34s, Memory Usage: 3110.0KB
+Test Loss: 0.4495, Test Acc: 0.8507, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 63
+LR: 1.0000e-02, Train Loss: 0.3098, Train Acc: 0.8936, Train Latency: 26.13s, Memory Usage: 3110.0KB
+Test Loss: 0.3898, Test Acc: 0.8653, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 64
+LR: 1.0000e-02, Train Loss: 0.3089, Train Acc: 0.8941, Train Latency: 25.82s, Memory Usage: 3110.0KB
+Test Loss: 0.5045, Test Acc: 0.8331, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 65
+LR: 1.0000e-02, Train Loss: 0.3070, Train Acc: 0.8939, Train Latency: 24.66s, Memory Usage: 3110.0KB
+Test Loss: 0.4566, Test Acc: 0.8507, Test Latency: 2.44s, Test Memory Usage: 194.0KB
+
+Epoch 66
+LR: 1.0000e-02, Train Loss: 0.3074, Train Acc: 0.8952, Train Latency: 26.13s, Memory Usage: 3110.0KB
+Test Loss: 0.5490, Test Acc: 0.8175, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 67
+LR: 1.0000e-02, Train Loss: 0.3034, Train Acc: 0.8960, Train Latency: 25.01s, Memory Usage: 3110.0KB
+Test Loss: 0.4495, Test Acc: 0.8474, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 68
+LR: 1.0000e-02, Train Loss: 0.3070, Train Acc: 0.8940, Train Latency: 26.38s, Memory Usage: 3110.0KB
+Test Loss: 0.4014, Test Acc: 0.8617, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 69
+LR: 1.0000e-02, Train Loss: 0.3018, Train Acc: 0.8976, Train Latency: 26.11s, Memory Usage: 3110.0KB
+Test Loss: 0.6146, Test Acc: 0.8020, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 70
+LR: 1.0000e-02, Train Loss: 0.3068, Train Acc: 0.8958, Train Latency: 26.69s, Memory Usage: 3110.0KB
+Test Loss: 0.4061, Test Acc: 0.8595, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 71
+LR: 1.0000e-02, Train Loss: 0.2995, Train Acc: 0.8979, Train Latency: 26.45s, Memory Usage: 3110.0KB
+Test Loss: 0.5017, Test Acc: 0.8381, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 72
+LR: 1.0000e-02, Train Loss: 0.3069, Train Acc: 0.8956, Train Latency: 24.82s, Memory Usage: 3110.0KB
+Test Loss: 0.5062, Test Acc: 0.8359, Test Latency: 2.44s, Test Memory Usage: 194.0KB
+
+Epoch 73
+LR: 1.0000e-02, Train Loss: 0.3017, Train Acc: 0.8967, Train Latency: 25.77s, Memory Usage: 3110.0KB
+Test Loss: 0.4185, Test Acc: 0.8611, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 74
+LR: 1.0000e-02, Train Loss: 0.3018, Train Acc: 0.8970, Train Latency: 25.25s, Memory Usage: 3110.0KB
+Test Loss: 0.4630, Test Acc: 0.8455, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 75
+LR: 1.0000e-02, Train Loss: 0.3025, Train Acc: 0.8941, Train Latency: 23.98s, Memory Usage: 3110.0KB
+Test Loss: 0.4171, Test Acc: 0.8649, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 76
+LR: 1.0000e-02, Train Loss: 0.3000, Train Acc: 0.8961, Train Latency: 26.66s, Memory Usage: 3110.0KB
+Test Loss: 0.4777, Test Acc: 0.8363, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 77
+LR: 1.0000e-02, Train Loss: 0.2988, Train Acc: 0.8975, Train Latency: 26.03s, Memory Usage: 3110.0KB
+Test Loss: 0.4165, Test Acc: 0.8621, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 78
+LR: 1.0000e-02, Train Loss: 0.2937, Train Acc: 0.8985, Train Latency: 26.45s, Memory Usage: 3110.0KB
+Test Loss: 0.4292, Test Acc: 0.8533, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 79
+LR: 1.0000e-02, Train Loss: 0.2991, Train Acc: 0.8982, Train Latency: 26.28s, Memory Usage: 3110.0KB
+Test Loss: 0.4534, Test Acc: 0.8509, Test Latency: 2.77s, Test Memory Usage: 194.0KB
+
+Epoch 80
+LR: 1.0000e-02, Train Loss: 0.2895, Train Acc: 0.9000, Train Latency: 26.32s, Memory Usage: 3110.0KB
+Test Loss: 0.3886, Test Acc: 0.8677, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 81
+LR: 1.0000e-02, Train Loss: 0.2965, Train Acc: 0.8989, Train Latency: 26.22s, Memory Usage: 3110.0KB
+Test Loss: 0.4272, Test Acc: 0.8550, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 82
+LR: 1.0000e-02, Train Loss: 0.2937, Train Acc: 0.8996, Train Latency: 26.43s, Memory Usage: 3110.0KB
+Test Loss: 0.4485, Test Acc: 0.8483, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 83
+LR: 1.0000e-02, Train Loss: 0.2896, Train Acc: 0.9007, Train Latency: 25.80s, Memory Usage: 3110.0KB
+Test Loss: 0.4700, Test Acc: 0.8432, Test Latency: 2.67s, Test Memory Usage: 194.0KB
+
+Epoch 84
+LR: 1.0000e-02, Train Loss: 0.2913, Train Acc: 0.9008, Train Latency: 24.63s, Memory Usage: 3110.0KB
+Test Loss: 0.4304, Test Acc: 0.8571, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 85
+LR: 1.0000e-02, Train Loss: 0.2885, Train Acc: 0.8999, Train Latency: 24.89s, Memory Usage: 3110.0KB
+Test Loss: 0.4418, Test Acc: 0.8514, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 86
+LR: 1.0000e-02, Train Loss: 0.2908, Train Acc: 0.8992, Train Latency: 24.13s, Memory Usage: 3110.0KB
+Test Loss: 0.3759, Test Acc: 0.8742, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 87
+LR: 1.0000e-02, Train Loss: 0.2869, Train Acc: 0.9013, Train Latency: 26.72s, Memory Usage: 3110.0KB
+Test Loss: 0.4194, Test Acc: 0.8642, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 88
+LR: 1.0000e-02, Train Loss: 0.2902, Train Acc: 0.9012, Train Latency: 25.95s, Memory Usage: 3110.0KB
+Test Loss: 0.3883, Test Acc: 0.8664, Test Latency: 2.44s, Test Memory Usage: 194.0KB
+
+Epoch 89
+LR: 1.0000e-02, Train Loss: 0.2852, Train Acc: 0.9021, Train Latency: 26.12s, Memory Usage: 3110.0KB
+Test Loss: 0.5366, Test Acc: 0.8299, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 90
+LR: 1.0000e-02, Train Loss: 0.2859, Train Acc: 0.9025, Train Latency: 24.78s, Memory Usage: 3110.0KB
+Test Loss: 0.4919, Test Acc: 0.8405, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 91
+LR: 1.0000e-02, Train Loss: 0.2816, Train Acc: 0.9034, Train Latency: 25.48s, Memory Usage: 3110.0KB
+Test Loss: 0.3829, Test Acc: 0.8689, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 92
+LR: 1.0000e-02, Train Loss: 0.2850, Train Acc: 0.9015, Train Latency: 24.38s, Memory Usage: 3110.0KB
+Test Loss: 0.3988, Test Acc: 0.8626, Test Latency: 2.43s, Test Memory Usage: 194.0KB
+
+Epoch 93
+LR: 1.0000e-02, Train Loss: 0.2823, Train Acc: 0.9037, Train Latency: 23.57s, Memory Usage: 3110.0KB
+Test Loss: 0.4352, Test Acc: 0.8520, Test Latency: 2.44s, Test Memory Usage: 194.0KB
+
+Epoch 94
+LR: 1.0000e-02, Train Loss: 0.2791, Train Acc: 0.9057, Train Latency: 26.32s, Memory Usage: 3110.0KB
+Test Loss: 0.3871, Test Acc: 0.8669, Test Latency: 2.77s, Test Memory Usage: 194.0KB
+
+Epoch 95
+LR: 1.0000e-02, Train Loss: 0.2843, Train Acc: 0.9036, Train Latency: 22.14s, Memory Usage: 3110.0KB
+Test Loss: 0.3973, Test Acc: 0.8663, Test Latency: 2.48s, Test Memory Usage: 194.0KB
+
+Epoch 96
+LR: 1.0000e-02, Train Loss: 0.2833, Train Acc: 0.9014, Train Latency: 25.43s, Memory Usage: 3110.0KB
+Test Loss: 0.4300, Test Acc: 0.8510, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 97
+LR: 1.0000e-02, Train Loss: 0.2809, Train Acc: 0.9044, Train Latency: 26.21s, Memory Usage: 3110.0KB
+Test Loss: 0.4399, Test Acc: 0.8542, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 98
+LR: 1.0000e-02, Train Loss: 0.2809, Train Acc: 0.9043, Train Latency: 26.56s, Memory Usage: 3110.0KB
+Test Loss: 0.4061, Test Acc: 0.8640, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 99
+LR: 1.0000e-02, Train Loss: 0.2748, Train Acc: 0.9042, Train Latency: 26.24s, Memory Usage: 3110.0KB
+Test Loss: 0.4325, Test Acc: 0.8536, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 100
+LR: 1.0000e-02, Train Loss: 0.2762, Train Acc: 0.9062, Train Latency: 26.13s, Memory Usage: 3110.0KB
+Test Loss: 0.3963, Test Acc: 0.8737, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 101
+LR: 1.0000e-03, Train Loss: 0.2078, Train Acc: 0.9314, Train Latency: 22.84s, Memory Usage: 3110.0KB
+Test Loss: 0.2888, Test Acc: 0.9037, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 102
+LR: 1.0000e-03, Train Loss: 0.1804, Train Acc: 0.9413, Train Latency: 26.50s, Memory Usage: 3110.0KB
+Test Loss: 0.2855, Test Acc: 0.9048, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 103
+LR: 1.0000e-03, Train Loss: 0.1708, Train Acc: 0.9449, Train Latency: 26.67s, Memory Usage: 3110.0KB
+Test Loss: 0.2815, Test Acc: 0.9069, Test Latency: 2.72s, Test Memory Usage: 194.0KB
+
+Epoch 104
+LR: 1.0000e-03, Train Loss: 0.1662, Train Acc: 0.9454, Train Latency: 25.36s, Memory Usage: 3110.0KB
+Test Loss: 0.2760, Test Acc: 0.9052, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 105
+LR: 1.0000e-03, Train Loss: 0.1663, Train Acc: 0.9464, Train Latency: 25.41s, Memory Usage: 3110.0KB
+Test Loss: 0.2797, Test Acc: 0.9040, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 106
+LR: 1.0000e-03, Train Loss: 0.1581, Train Acc: 0.9499, Train Latency: 25.65s, Memory Usage: 3110.0KB
+Test Loss: 0.2862, Test Acc: 0.9062, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 107
+LR: 1.0000e-03, Train Loss: 0.1575, Train Acc: 0.9481, Train Latency: 24.49s, Memory Usage: 3110.0KB
+Test Loss: 0.2794, Test Acc: 0.9076, Test Latency: 2.77s, Test Memory Usage: 194.0KB
+
+Epoch 108
+LR: 1.0000e-03, Train Loss: 0.1524, Train Acc: 0.9502, Train Latency: 25.48s, Memory Usage: 3110.0KB
+Test Loss: 0.2816, Test Acc: 0.9057, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 109
+LR: 1.0000e-03, Train Loss: 0.1515, Train Acc: 0.9513, Train Latency: 25.45s, Memory Usage: 3110.0KB
+Test Loss: 0.2852, Test Acc: 0.9062, Test Latency: 2.83s, Test Memory Usage: 194.0KB
+
+Epoch 110
+LR: 1.0000e-03, Train Loss: 0.1482, Train Acc: 0.9507, Train Latency: 26.32s, Memory Usage: 3110.0KB
+Test Loss: 0.2796, Test Acc: 0.9084, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 111
+LR: 1.0000e-03, Train Loss: 0.1445, Train Acc: 0.9528, Train Latency: 24.96s, Memory Usage: 3110.0KB
+Test Loss: 0.2764, Test Acc: 0.9087, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 112
+LR: 1.0000e-03, Train Loss: 0.1473, Train Acc: 0.9529, Train Latency: 23.16s, Memory Usage: 3110.0KB
+Test Loss: 0.2718, Test Acc: 0.9103, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 113
+LR: 1.0000e-03, Train Loss: 0.1446, Train Acc: 0.9538, Train Latency: 26.51s, Memory Usage: 3110.0KB
+Test Loss: 0.2891, Test Acc: 0.9042, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 114
+LR: 1.0000e-03, Train Loss: 0.1416, Train Acc: 0.9545, Train Latency: 26.26s, Memory Usage: 3110.0KB
+Test Loss: 0.2872, Test Acc: 0.9054, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 115
+LR: 1.0000e-03, Train Loss: 0.1409, Train Acc: 0.9551, Train Latency: 26.28s, Memory Usage: 3110.0KB
+Test Loss: 0.2779, Test Acc: 0.9079, Test Latency: 2.77s, Test Memory Usage: 194.0KB
+
+Epoch 116
+LR: 1.0000e-03, Train Loss: 0.1367, Train Acc: 0.9553, Train Latency: 26.19s, Memory Usage: 3110.0KB
+Test Loss: 0.2897, Test Acc: 0.9069, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 117
+LR: 1.0000e-03, Train Loss: 0.1409, Train Acc: 0.9539, Train Latency: 26.07s, Memory Usage: 3110.0KB
+Test Loss: 0.2872, Test Acc: 0.9063, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 118
+LR: 1.0000e-03, Train Loss: 0.1374, Train Acc: 0.9545, Train Latency: 26.92s, Memory Usage: 3110.0KB
+Test Loss: 0.2935, Test Acc: 0.9032, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 119
+LR: 1.0000e-03, Train Loss: 0.1377, Train Acc: 0.9552, Train Latency: 25.58s, Memory Usage: 3110.0KB
+Test Loss: 0.2861, Test Acc: 0.9085, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 120
+LR: 1.0000e-03, Train Loss: 0.1358, Train Acc: 0.9564, Train Latency: 23.87s, Memory Usage: 3110.0KB
+Test Loss: 0.2898, Test Acc: 0.9065, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 121
+LR: 1.0000e-03, Train Loss: 0.1356, Train Acc: 0.9560, Train Latency: 25.19s, Memory Usage: 3110.0KB
+Test Loss: 0.2895, Test Acc: 0.9041, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 122
+LR: 1.0000e-03, Train Loss: 0.1339, Train Acc: 0.9567, Train Latency: 23.72s, Memory Usage: 3110.0KB
+Test Loss: 0.2885, Test Acc: 0.9087, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 123
+LR: 1.0000e-03, Train Loss: 0.1318, Train Acc: 0.9573, Train Latency: 23.89s, Memory Usage: 3110.0KB
+Test Loss: 0.2928, Test Acc: 0.9055, Test Latency: 2.43s, Test Memory Usage: 194.0KB
+
+Epoch 124
+LR: 1.0000e-03, Train Loss: 0.1326, Train Acc: 0.9561, Train Latency: 24.13s, Memory Usage: 3110.0KB
+Test Loss: 0.2900, Test Acc: 0.9068, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 125
+LR: 1.0000e-03, Train Loss: 0.1293, Train Acc: 0.9587, Train Latency: 26.56s, Memory Usage: 3110.0KB
+Test Loss: 0.2983, Test Acc: 0.9051, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 126
+LR: 1.0000e-03, Train Loss: 0.1252, Train Acc: 0.9593, Train Latency: 24.89s, Memory Usage: 3110.0KB
+Test Loss: 0.3026, Test Acc: 0.9039, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 127
+LR: 1.0000e-03, Train Loss: 0.1316, Train Acc: 0.9564, Train Latency: 26.36s, Memory Usage: 3110.0KB
+Test Loss: 0.3029, Test Acc: 0.9012, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 128
+LR: 1.0000e-03, Train Loss: 0.1268, Train Acc: 0.9583, Train Latency: 26.50s, Memory Usage: 3110.0KB
+Test Loss: 0.2902, Test Acc: 0.9036, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 129
+LR: 1.0000e-03, Train Loss: 0.1267, Train Acc: 0.9590, Train Latency: 26.36s, Memory Usage: 3110.0KB
+Test Loss: 0.2937, Test Acc: 0.9068, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 130
+LR: 1.0000e-03, Train Loss: 0.1265, Train Acc: 0.9585, Train Latency: 26.30s, Memory Usage: 3110.0KB
+Test Loss: 0.3005, Test Acc: 0.9019, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 131
+LR: 1.0000e-03, Train Loss: 0.1277, Train Acc: 0.9576, Train Latency: 26.42s, Memory Usage: 3110.0KB
+Test Loss: 0.2990, Test Acc: 0.9067, Test Latency: 2.63s, Test Memory Usage: 194.0KB
+
+Epoch 132
+LR: 1.0000e-03, Train Loss: 0.1260, Train Acc: 0.9585, Train Latency: 25.92s, Memory Usage: 3110.0KB
+Test Loss: 0.2870, Test Acc: 0.9097, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 133
+LR: 1.0000e-03, Train Loss: 0.1270, Train Acc: 0.9582, Train Latency: 26.23s, Memory Usage: 3110.0KB
+Test Loss: 0.2985, Test Acc: 0.9041, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 134
+LR: 1.0000e-03, Train Loss: 0.1268, Train Acc: 0.9576, Train Latency: 24.81s, Memory Usage: 3110.0KB
+Test Loss: 0.3031, Test Acc: 0.9050, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 135
+LR: 1.0000e-03, Train Loss: 0.1218, Train Acc: 0.9597, Train Latency: 24.93s, Memory Usage: 3110.0KB
+Test Loss: 0.2916, Test Acc: 0.9084, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 136
+LR: 1.0000e-03, Train Loss: 0.1225, Train Acc: 0.9597, Train Latency: 23.45s, Memory Usage: 3110.0KB
+Test Loss: 0.3050, Test Acc: 0.9052, Test Latency: 2.44s, Test Memory Usage: 194.0KB
+
+Epoch 137
+LR: 1.0000e-03, Train Loss: 0.1236, Train Acc: 0.9598, Train Latency: 23.06s, Memory Usage: 3110.0KB
+Test Loss: 0.3030, Test Acc: 0.9020, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 138
+LR: 1.0000e-03, Train Loss: 0.1376, Train Acc: 0.9589, Train Latency: 26.15s, Memory Usage: 3110.0KB
+Test Loss: 0.3134, Test Acc: 0.9042, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 139
+LR: 1.0000e-03, Train Loss: 0.1230, Train Acc: 0.9595, Train Latency: 26.44s, Memory Usage: 3110.0KB
+Test Loss: 0.2994, Test Acc: 0.9045, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 140
+LR: 1.0000e-03, Train Loss: 0.1243, Train Acc: 0.9590, Train Latency: 23.78s, Memory Usage: 3110.0KB
+Test Loss: 0.3025, Test Acc: 0.9027, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 141
+LR: 1.0000e-03, Train Loss: 0.1246, Train Acc: 0.9583, Train Latency: 26.07s, Memory Usage: 3110.0KB
+Test Loss: 0.3007, Test Acc: 0.9059, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 142
+LR: 1.0000e-03, Train Loss: 0.1224, Train Acc: 0.9595, Train Latency: 26.49s, Memory Usage: 3110.0KB
+Test Loss: 0.3081, Test Acc: 0.9034, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 143
+LR: 1.0000e-03, Train Loss: 0.1203, Train Acc: 0.9609, Train Latency: 25.88s, Memory Usage: 3110.0KB
+Test Loss: 0.3066, Test Acc: 0.9024, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 144
+LR: 1.0000e-03, Train Loss: 0.1246, Train Acc: 0.9578, Train Latency: 26.31s, Memory Usage: 3110.0KB
+Test Loss: 0.3041, Test Acc: 0.9048, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 145
+LR: 1.0000e-03, Train Loss: 0.1213, Train Acc: 0.9598, Train Latency: 26.22s, Memory Usage: 3110.0KB
+Test Loss: 0.3113, Test Acc: 0.9013, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 146
+LR: 1.0000e-03, Train Loss: 0.1189, Train Acc: 0.9603, Train Latency: 26.11s, Memory Usage: 3110.0KB
+Test Loss: 0.3058, Test Acc: 0.9052, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 147
+LR: 1.0000e-03, Train Loss: 0.1190, Train Acc: 0.9614, Train Latency: 26.27s, Memory Usage: 3110.0KB
+Test Loss: 0.3032, Test Acc: 0.9041, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 148
+LR: 1.0000e-03, Train Loss: 0.1190, Train Acc: 0.9611, Train Latency: 25.16s, Memory Usage: 3110.0KB
+Test Loss: 0.3126, Test Acc: 0.8993, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 149
+LR: 1.0000e-03, Train Loss: 0.1155, Train Acc: 0.9629, Train Latency: 25.16s, Memory Usage: 3110.0KB
+Test Loss: 0.3372, Test Acc: 0.8989, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 150
+LR: 1.0000e-03, Train Loss: 0.1177, Train Acc: 0.9607, Train Latency: 24.80s, Memory Usage: 3110.0KB
+Test Loss: 0.3043, Test Acc: 0.9063, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 151
+LR: 1.0000e-04, Train Loss: 0.1112, Train Acc: 0.9640, Train Latency: 26.54s, Memory Usage: 3110.0KB
+Test Loss: 0.2991, Test Acc: 0.9076, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 152
+LR: 1.0000e-04, Train Loss: 0.1071, Train Acc: 0.9661, Train Latency: 24.42s, Memory Usage: 3110.0KB
+Test Loss: 0.2964, Test Acc: 0.9056, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 153
+LR: 1.0000e-04, Train Loss: 0.1044, Train Acc: 0.9669, Train Latency: 25.69s, Memory Usage: 3110.0KB
+Test Loss: 0.2857, Test Acc: 0.9086, Test Latency: 2.44s, Test Memory Usage: 194.0KB
+
+Epoch 154
+LR: 1.0000e-04, Train Loss: 0.0992, Train Acc: 0.9690, Train Latency: 25.80s, Memory Usage: 3110.0KB
+Test Loss: 0.2806, Test Acc: 0.9100, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 155
+LR: 1.0000e-04, Train Loss: 0.0956, Train Acc: 0.9707, Train Latency: 26.19s, Memory Usage: 3110.0KB
+Test Loss: 0.2855, Test Acc: 0.9109, Test Latency: 2.77s, Test Memory Usage: 194.0KB
+
+Epoch 156
+LR: 1.0000e-04, Train Loss: 0.0950, Train Acc: 0.9706, Train Latency: 25.95s, Memory Usage: 3110.0KB
+Test Loss: 0.2824, Test Acc: 0.9109, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 157
+LR: 1.0000e-04, Train Loss: 0.0995, Train Acc: 0.9693, Train Latency: 25.97s, Memory Usage: 3110.0KB
+Test Loss: 0.2825, Test Acc: 0.9105, Test Latency: 2.47s, Test Memory Usage: 194.0KB
+
+Epoch 158
+LR: 1.0000e-04, Train Loss: 0.0923, Train Acc: 0.9725, Train Latency: 24.97s, Memory Usage: 3110.0KB
+Test Loss: 0.2885, Test Acc: 0.9107, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 159
+LR: 1.0000e-04, Train Loss: 0.0951, Train Acc: 0.9711, Train Latency: 26.69s, Memory Usage: 3110.0KB
+Test Loss: 0.2908, Test Acc: 0.9098, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 160
+LR: 1.0000e-04, Train Loss: 0.1009, Train Acc: 0.9682, Train Latency: 23.77s, Memory Usage: 3110.0KB
+Test Loss: 0.2898, Test Acc: 0.9104, Test Latency: 2.44s, Test Memory Usage: 194.0KB
+
+Epoch 161
+LR: 1.0000e-04, Train Loss: 0.0986, Train Acc: 0.9687, Train Latency: 25.98s, Memory Usage: 3110.0KB
+Test Loss: 0.2881, Test Acc: 0.9086, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 162
+LR: 1.0000e-04, Train Loss: 0.0963, Train Acc: 0.9706, Train Latency: 25.38s, Memory Usage: 3110.0KB
+Test Loss: 0.2824, Test Acc: 0.9080, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 163
+LR: 1.0000e-04, Train Loss: 0.0943, Train Acc: 0.9708, Train Latency: 25.39s, Memory Usage: 3110.0KB
+Test Loss: 0.2861, Test Acc: 0.9096, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 164
+LR: 1.0000e-04, Train Loss: 0.0930, Train Acc: 0.9719, Train Latency: 26.23s, Memory Usage: 3110.0KB
+Test Loss: 0.2859, Test Acc: 0.9093, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 165
+LR: 1.0000e-04, Train Loss: 0.0960, Train Acc: 0.9707, Train Latency: 26.38s, Memory Usage: 3110.0KB
+Test Loss: 0.2823, Test Acc: 0.9093, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 166
+LR: 1.0000e-04, Train Loss: 0.0934, Train Acc: 0.9713, Train Latency: 26.35s, Memory Usage: 3110.0KB
+Test Loss: 0.2842, Test Acc: 0.9094, Test Latency: 2.73s, Test Memory Usage: 194.0KB
+
+Epoch 167
+LR: 1.0000e-04, Train Loss: 0.0913, Train Acc: 0.9721, Train Latency: 24.78s, Memory Usage: 3110.0KB
+Test Loss: 0.2861, Test Acc: 0.9080, Test Latency: 2.84s, Test Memory Usage: 194.0KB
+
+Epoch 168
+LR: 1.0000e-04, Train Loss: 0.0926, Train Acc: 0.9712, Train Latency: 25.93s, Memory Usage: 3110.0KB
+Test Loss: 0.2961, Test Acc: 0.9068, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 169
+LR: 1.0000e-04, Train Loss: 0.0961, Train Acc: 0.9693, Train Latency: 26.62s, Memory Usage: 3110.0KB
+Test Loss: 0.2892, Test Acc: 0.9068, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 170
+LR: 1.0000e-04, Train Loss: 0.0946, Train Acc: 0.9705, Train Latency: 26.54s, Memory Usage: 3110.0KB
+Test Loss: 0.2857, Test Acc: 0.9072, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 171
+LR: 1.0000e-04, Train Loss: 0.0922, Train Acc: 0.9715, Train Latency: 26.49s, Memory Usage: 3110.0KB
+Test Loss: 0.2886, Test Acc: 0.9108, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 172
+LR: 1.0000e-04, Train Loss: 0.0916, Train Acc: 0.9712, Train Latency: 26.70s, Memory Usage: 3110.0KB
+Test Loss: 0.2862, Test Acc: 0.9109, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 173
+LR: 1.0000e-04, Train Loss: 0.0925, Train Acc: 0.9715, Train Latency: 26.49s, Memory Usage: 3110.0KB
+Test Loss: 0.2868, Test Acc: 0.9104, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 174
+LR: 1.0000e-04, Train Loss: 0.0948, Train Acc: 0.9704, Train Latency: 24.25s, Memory Usage: 3110.0KB
+Test Loss: 0.2873, Test Acc: 0.9096, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 175
+LR: 1.0000e-04, Train Loss: 0.0937, Train Acc: 0.9709, Train Latency: 26.29s, Memory Usage: 3110.0KB
+Test Loss: 0.2906, Test Acc: 0.9080, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 176
+LR: 1.0000e-04, Train Loss: 0.0893, Train Acc: 0.9729, Train Latency: 26.26s, Memory Usage: 3110.0KB
+Test Loss: 0.2841, Test Acc: 0.9099, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 177
+LR: 1.0000e-04, Train Loss: 0.0932, Train Acc: 0.9709, Train Latency: 26.00s, Memory Usage: 3110.0KB
+Test Loss: 0.2888, Test Acc: 0.9100, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 178
+LR: 1.0000e-04, Train Loss: 0.0887, Train Acc: 0.9724, Train Latency: 25.47s, Memory Usage: 3110.0KB
+Test Loss: 0.2883, Test Acc: 0.9106, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 179
+LR: 1.0000e-04, Train Loss: 0.0922, Train Acc: 0.9719, Train Latency: 26.44s, Memory Usage: 3110.0KB
+Test Loss: 0.2932, Test Acc: 0.9088, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 180
+LR: 1.0000e-04, Train Loss: 0.0912, Train Acc: 0.9714, Train Latency: 26.24s, Memory Usage: 3110.0KB
+Test Loss: 0.2957, Test Acc: 0.9082, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 181
+LR: 1.0000e-04, Train Loss: 0.0925, Train Acc: 0.9712, Train Latency: 25.78s, Memory Usage: 3110.0KB
+Test Loss: 0.2906, Test Acc: 0.9095, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 182
+LR: 1.0000e-04, Train Loss: 0.0908, Train Acc: 0.9722, Train Latency: 24.03s, Memory Usage: 3110.0KB
+Test Loss: 0.2895, Test Acc: 0.9114, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 183
+LR: 1.0000e-04, Train Loss: 0.0923, Train Acc: 0.9715, Train Latency: 25.39s, Memory Usage: 3110.0KB
+Test Loss: 0.2922, Test Acc: 0.9110, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 184
+LR: 1.0000e-04, Train Loss: 0.0887, Train Acc: 0.9720, Train Latency: 26.95s, Memory Usage: 3110.0KB
+Test Loss: 0.2900, Test Acc: 0.9112, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 185
+LR: 1.0000e-04, Train Loss: 0.0892, Train Acc: 0.9732, Train Latency: 26.85s, Memory Usage: 3110.0KB
+Test Loss: 0.2832, Test Acc: 0.9119, Test Latency: 2.73s, Test Memory Usage: 194.0KB
+
+Epoch 186
+LR: 1.0000e-04, Train Loss: 0.0875, Train Acc: 0.9729, Train Latency: 23.48s, Memory Usage: 3110.0KB
+Test Loss: 0.2895, Test Acc: 0.9099, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 187
+LR: 1.0000e-04, Train Loss: 0.0858, Train Acc: 0.9739, Train Latency: 26.10s, Memory Usage: 3110.0KB
+Test Loss: 0.2868, Test Acc: 0.9122, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 188
+LR: 1.0000e-04, Train Loss: 0.0895, Train Acc: 0.9723, Train Latency: 25.29s, Memory Usage: 3110.0KB
+Test Loss: 0.2919, Test Acc: 0.9107, Test Latency: 2.78s, Test Memory Usage: 194.0KB
+
+Epoch 189
+LR: 1.0000e-04, Train Loss: 0.0884, Train Acc: 0.9731, Train Latency: 24.80s, Memory Usage: 3110.0KB
+Test Loss: 0.2974, Test Acc: 0.9079, Test Latency: 2.46s, Test Memory Usage: 194.0KB
+
+Epoch 190
+LR: 1.0000e-04, Train Loss: 0.0874, Train Acc: 0.9731, Train Latency: 26.28s, Memory Usage: 3110.0KB
+Test Loss: 0.2912, Test Acc: 0.9102, Test Latency: 2.75s, Test Memory Usage: 194.0KB
+
+Epoch 191
+LR: 1.0000e-04, Train Loss: 0.0876, Train Acc: 0.9732, Train Latency: 25.76s, Memory Usage: 3110.0KB
+Test Loss: 0.2929, Test Acc: 0.9093, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 192
+LR: 1.0000e-04, Train Loss: 0.0912, Train Acc: 0.9719, Train Latency: 26.28s, Memory Usage: 3110.0KB
+Test Loss: 0.2936, Test Acc: 0.9091, Test Latency: 2.82s, Test Memory Usage: 194.0KB
+
+Epoch 193
+LR: 1.0000e-04, Train Loss: 0.0895, Train Acc: 0.9729, Train Latency: 25.82s, Memory Usage: 3110.0KB
+Test Loss: 0.2883, Test Acc: 0.9087, Test Latency: 2.79s, Test Memory Usage: 194.0KB
+
+Epoch 194
+LR: 1.0000e-04, Train Loss: 0.0888, Train Acc: 0.9736, Train Latency: 23.96s, Memory Usage: 3110.0KB
+Test Loss: 0.2898, Test Acc: 0.9096, Test Latency: 2.47s, Test Memory Usage: 194.0KB
+
+Epoch 195
+LR: 1.0000e-04, Train Loss: 0.0895, Train Acc: 0.9726, Train Latency: 26.15s, Memory Usage: 3110.0KB
+Test Loss: 0.2982, Test Acc: 0.9070, Test Latency: 2.81s, Test Memory Usage: 194.0KB
+
+Epoch 196
+LR: 1.0000e-04, Train Loss: 0.0917, Train Acc: 0.9715, Train Latency: 23.72s, Memory Usage: 3110.0KB
+Test Loss: 0.3013, Test Acc: 0.9063, Test Latency: 2.45s, Test Memory Usage: 194.0KB
+
+Epoch 197
+LR: 1.0000e-04, Train Loss: 0.0934, Train Acc: 0.9707, Train Latency: 24.09s, Memory Usage: 3110.0KB
+Test Loss: 0.2999, Test Acc: 0.9096, Test Latency: 2.75s, Test Memory Usage: 194.0KB
+
+Epoch 198
+LR: 1.0000e-04, Train Loss: 0.0917, Train Acc: 0.9717, Train Latency: 23.33s, Memory Usage: 3110.0KB
+Test Loss: 0.2931, Test Acc: 0.9077, Test Latency: 2.44s, Test Memory Usage: 194.0KB
+
+Epoch 199
+LR: 1.0000e-04, Train Loss: 0.0889, Train Acc: 0.9723, Train Latency: 23.40s, Memory Usage: 3110.0KB
+Test Loss: 0.2980, Test Acc: 0.9061, Test Latency: 2.80s, Test Memory Usage: 194.0KB
+
+Epoch 200
+LR: 1.0000e-04, Train Loss: 0.0911, Train Acc: 0.9719, Train Latency: 24.53s, Memory Usage: 3110.0KB
+Test Loss: 0.2902, Test Acc: 0.9105, Test Latency: 2.78s, Test Memory Usage: 194.0KB
