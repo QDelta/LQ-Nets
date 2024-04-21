@@ -13,21 +13,22 @@ from resnet import ResNet
 def parse_quantization_bits_from_filename(filename):
     match_w = re.search(r'_wq(\d+)', filename)
     match_a = re.search(r'_aq(\d+)', filename)
-    
+
     w_nbits = int(match_w.group(1)) if match_w else None
     a_nbits = int(match_a.group(1)) if match_a else None
+    base_filename = os.path.splitext(os.path.basename(filename))[0]
 
-    print('weight bits:',w_nbits, 'activation bits:', a_nbits)
-    
-    return w_nbits, a_nbits
+    print('weight bits:', w_nbits, 'activation bits:', a_nbits, 'base filename:', base_filename)
+
+    return w_nbits, a_nbits, base_filename
 
 def load_model(model_path, num_layers, num_classes, w_nbits, a_nbits, device):
     model = ResNet(w_nbits=w_nbits, a_nbits=a_nbits)
     model.to(device)
-    
+
     model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
-    
+
     return model
 
 def collect_activations_and_quantized_weights(model, dataloader, device):
@@ -58,20 +59,20 @@ def collect_activations_and_quantized_weights(model, dataloader, device):
 
     return activations, quantized_weights
 
-def plot_distributions_side_by_side(activations, quantized_weights):
+def plot_distributions_side_by_side(activations, quantized_weights, base_filename):
     sorted_weight_keys = sorted(quantized_weights.keys())
     sorted_activation_keys = sorted(activations.keys())
 
     num_layers = max(len(sorted_weight_keys), len(sorted_activation_keys))
-    if num_layers == 1:  # Single layer case
-        fig, axes = plt.subplots(1, 2, figsize=(12, 6))
-        axes = [axes]
-    else:
-        fig, axes = plt.subplots(num_layers, 2, figsize=(12, 6 * num_layers))
+    fig, axes = plt.subplots(num_layers, 2, figsize=(12, 6 * num_layers))  
+
+    output_directory = f"./output/{base_filename}"
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
 
     for i, (weight_key, activation_key) in enumerate(zip(sorted_weight_keys, sorted_activation_keys)):
-        ax_w = axes[i][0]
-        ax_a = axes[i][1]
+        ax_w = axes[i][0] if num_layers > 1 else axes[0]
+        ax_a = axes[i][1] if num_layers > 1 else axes[1]
         ax_w.hist(quantized_weights[weight_key].ravel(), bins=50, alpha=0.75)
         ax_w.set_title(f'Quantized Weight Distribution: {weight_key}')
         ax_w.set_xlabel('Weight Values')
@@ -82,23 +83,24 @@ def plot_distributions_side_by_side(activations, quantized_weights):
         ax_a.set_xlabel('Activation Values')
         ax_a.set_ylabel('Frequency')
 
-    plt.tight_layout()
-    plt.show()
+        plot_filename = f"{output_directory}/{base_filename}_{weight_key}_and_{activation_key}.png"
+        plt.savefig(plot_filename)
+        print(f"Saved plot as {plot_filename}")
+
+    plt.close(fig)
 
 def analyze_model(model_filename, device='cuda'):
-    w_nbits, a_nbits = parse_quantization_bits_from_filename(model_filename)
-    
-    # based on the known model configuration for CIFAR-10
+    w_nbits, a_nbits, base_filename = parse_quantization_bits_from_filename(model_filename)
     num_layers = 20
     num_classes = 10
-    
-    model = load_model(model_filename, num_layers, num_classes, w_nbits, a_nbits, device)
 
+    model = load_model(model_filename, num_layers, num_classes, w_nbits, a_nbits, device)
     test_loader = DataLoader(TEST_SET, batch_size=64, shuffle=False)
 
     activations, weights = collect_activations_and_quantized_weights(model, test_loader, device)
-    plot_distributions_side_by_side(activations, weights)
+    plot_distributions_side_by_side(activations, weights, base_filename)
 
+    
 TEST_SET = datasets.CIFAR10(root='./data', train=False, download=True, transform=transforms.ToTensor())
 
 if __name__ == '__main__':
