@@ -13,6 +13,7 @@ from resnet_liq import ResNet as ResNetLiQ
 from time import time
 from contextlib import contextmanager
 import os
+from torch.cuda import max_memory_allocated
 
 random.seed(42)
 np.random.seed(42)
@@ -66,8 +67,8 @@ def test(model: nn.Module, loader: DataLoader):
     test_correct = 0
     test_total = 0
     start_time = time()
-    start_memory = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0
-    
+    torch.cuda.reset_max_memory_allocated(DEVICE)
+
     with torch.no_grad():
         for inputs, targets in loader:
             inputs, targets = inputs.to(DEVICE), targets.to(DEVICE)
@@ -77,17 +78,19 @@ def test(model: nn.Module, loader: DataLoader):
             test_loss += loss.item()
             test_correct += (outputs.argmax(1) == targets).sum().item()
             test_total += targets.size(0)
-    
+
     latency = time() - start_time
-    memory_usage = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0  # MB
-    test_memory_usage = memory_usage - start_memory
+    max_memory_usage = max_memory_allocated(DEVICE) / (1024 ** 2)
 
     test_loss /= len(loader)
     test_acc = test_correct / test_total
-    return test_loss, test_acc, latency, test_memory_usage
+    return test_loss, test_acc, latency, max_memory_usage
 
 def train(w_nbits, a_nbits, linear=False, lr=0.1, weight_decay=1e-3,
           optimizer_type='sgd', epochs=200, batch_size=128):
+    
+    torch.cuda.reset_max_memory_allocated(DEVICE)
+
     if linear:
         model = ResNetLiQ(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
     else:
@@ -128,8 +131,6 @@ def train(w_nbits, a_nbits, linear=False, lr=0.1, weight_decay=1e-3,
     with print_and_log(log_filename) as log:
         log(f'\nQuantization: weight={w_nbits} activation={a_nbits} linear={linear}, Using device: {DEVICE}')
 
-        start_memory = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0
-        
         for epoch in range(epochs):
             log(f'\nEpoch {epoch+1}')
             model.train()
@@ -139,7 +140,7 @@ def train(w_nbits, a_nbits, linear=False, lr=0.1, weight_decay=1e-3,
             train_total = 0
 
             start_time = time()
-            
+
             for inputs, targets in tqdm(train_loader, desc='Train', unit='batch', ascii=True, dynamic_ncols=True):
                 inputs, targets = inputs.to(DEVICE), targets.to(DEVICE)
                 optimizer.zero_grad()
@@ -155,11 +156,10 @@ def train(w_nbits, a_nbits, linear=False, lr=0.1, weight_decay=1e-3,
             train_loss /= len(train_loader)
             train_acc = train_correct / train_total
 
-            train_latency = time() - start_time 
-            end_memory = torch.cuda.memory_allocated(DEVICE) / (1024 ** 2) if DEVICE.type == 'cuda' else 0  # 结束时内存
-            train_memory_usage = end_memory - start_memory
+            train_latency = time() - start_time
+            max_memory_usage_during_training = max_memory_allocated(DEVICE) / (1024 ** 2)
 
-            log(f'LR: {optimizer.param_groups[0]["lr"]:.4e}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, Train Latency: {train_latency:.2f}s, Memory Usage: {train_memory_usage:.2f}MB')
+            log(f'LR: {optimizer.param_groups[0]["lr"]:.4e}, Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.4f}, Train Latency: {train_latency:.2f}s, Memory Usage: {max_memory_usage_during_training:.2f}MB')
 
             model.eval()
             test_loss, test_acc, test_latency, test_memory_usage = test(model, test_loader)
