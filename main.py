@@ -9,6 +9,7 @@ from torch.utils.data import Dataset, DataLoader
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 from resnet import ResNet
+from resnet_liq import ResNet as ResNetLiQ
 from time import time
 from contextlib import contextmanager
 import os
@@ -85,16 +86,19 @@ def test(model: nn.Module, loader: DataLoader):
     test_acc = test_correct / test_total
     return test_loss, test_acc, latency, max_memory_usage
 
-def train(w_nbits, a_nbits, lr=0.1, weight_decay=1e-3,
+def train(w_nbits, a_nbits, linear=False, lr=0.1, weight_decay=1e-3,
           optimizer_type='sgd', epochs=200, batch_size=128):
-
-    # import resnet20
-    # model = resnet20.ResNetCIFAR(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
+    
     torch.cuda.reset_max_memory_allocated(DEVICE)
-    model = ResNet(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
+
+    if linear:
+        model = ResNetLiQ(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
+    else:
+        model = ResNet(w_nbits=w_nbits, a_nbits=a_nbits).to(DEVICE)
 
     ckpt_base_filename = (
         'resnet20_cifar'
+        + ('linear' if linear else '')
         + ('' if w_nbits is None else f'_wq{w_nbits}')
         + ('' if a_nbits is None else f'_aq{a_nbits}')
         + '.pt'
@@ -125,7 +129,7 @@ def train(w_nbits, a_nbits, lr=0.1, weight_decay=1e-3,
 
 
     with print_and_log(log_filename) as log:
-        log(f'\nQuantization: weight={w_nbits} activation={a_nbits}, Using device: {DEVICE}')
+        log(f'\nQuantization: weight={w_nbits} activation={a_nbits} linear={linear}, Using device: {DEVICE}')
 
         for epoch in range(epochs):
             log(f'\nEpoch {epoch+1}')
@@ -181,5 +185,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--wq', type=int, default=None)
     parser.add_argument('--aq', type=int, default=None)
+    parser.add_argument('--linear', action='store_true')
     args = parser.parse_args()
-    train(w_nbits=args.wq, a_nbits=args.aq)
+    train(w_nbits=args.wq, a_nbits=args.aq, linear=args.linear)
